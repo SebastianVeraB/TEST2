@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
     options {
@@ -7,7 +6,7 @@ pipeline {
     stages {
          stage ('Checkout') {
              steps {
-                 publishChecks conclusion: 'NEUTRAL', name: 'Nebula', status: 'IN_PROGRESS', summary: 'Testing Summary', text: 'Testing text', title: 'Testing Title'
+                 publishChecks conclusion: 'NEUTRAL', name: 'Deployment check', status: 'IN_PROGRESS', title: 'Running...'
                   checkout scm
              } 
          }
@@ -16,7 +15,7 @@ pipeline {
         stage('build') {
             steps {
                 echo 'hello!'
-                publishChecks name: 'Nebula', summary: 'Testing Summary', text: 'Testing text', title: 'Testing Title'
+                publishChecks name: 'Deployment check', summary: 'This Pull Request is deployable. No Metadata inconsistacies were found and Apex test run satisfies the acceptance criteria ', text: 'Reported Apex code coverage: ', title: 'Successful '
 
             }
         }

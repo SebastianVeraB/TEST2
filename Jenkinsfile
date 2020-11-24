@@ -4,7 +4,9 @@ pipeline {
     skipDefaultCheckout true
     }
      triggers {
-      issueCommentTrigger('Approved')
+       triggers {
+      pullRequestReview()
+    }
     }
     stages {
          stage ('Checkout') {

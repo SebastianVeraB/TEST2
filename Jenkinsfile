@@ -23,7 +23,9 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                pullRequest.merge(commitTitle: 'Make it so..', commitMessage: 'TO BOLDLY GO WHERE NO MAN HAS GONE BEFORE...', mergeMethod: 'squash')
+                script {
+                    pullRequest.merge(commitTitle: 'Make it so..', commitMessage: 'TO BOLDLY GO WHERE NO MAN HAS GONE BEFORE...', mergeMethod: 'squash')
+                }
             }
             when { 
                 environment name: 'GITHUB_REVIEW_STATE', value: 'approved' 

@@ -1,4 +1,7 @@
 pipeline {
+    triggers {
+      pullRequestReview(reviewStates: ['approved'])
+    }
     agent any
     options {
     skipDefaultCheckout true
@@ -15,7 +18,7 @@ pipeline {
         stage('build') {
             steps {
                 echo 'hello!'
-                publishChecks name: 'Deployment check', summary: 'This Pull Request is deployable. No Metadata inconsistacies were found and Apex test run satisfies the acceptance criteria ', text: 'Reported Apex code coverage: ', title: 'Successful '
+                publishChecks name: 'Deployment check', summary: 'This Pull Request is deployable', text: 'Reported Apex code coverage: ', title: 'Sucessful'
 
             }
         }

@@ -3,6 +3,9 @@ pipeline {
     options {
     skipDefaultCheckout true
     }
+     triggers {
+      pullRequestReview()
+    }
     stages {
          stage ('Checkout') {
              steps {

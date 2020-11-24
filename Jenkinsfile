@@ -1,6 +1,6 @@
 pipeline {
     triggers {
-      pullRequestReview(reviewStates: ['approved'])
+      pullRequestReview
     }
     agent any
     options {

@@ -1,6 +1,6 @@
 pipeline {
     triggers {
-      pullRequestReview
+      pullRequestReview()
     }
     agent any
     options {

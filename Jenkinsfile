@@ -1,6 +1,6 @@
 pipeline {
      triggers {
-        issueCommentTrigger('test')
+        issueCommentTrigger('*test*')
     }
     agent any
     options {

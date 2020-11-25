@@ -30,6 +30,7 @@ pipeline {
                         }
                 }
             }
+             when { equals expected: 'APPROVED', actual: review.state }
             
         }
         

@@ -30,9 +30,7 @@ pipeline {
                         }
                 }
             }
-             when { 
-                environment name: 'GITHUB_REVIEW_STATE', value: 'approved' 
-            }
+            
         }
         
     }

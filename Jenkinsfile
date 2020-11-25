@@ -1,11 +1,12 @@
 pipeline {
+     triggers {
+        issueCommentTrigger('test')
+    }
     agent any
     options {
     skipDefaultCheckout true
     }
-       triggers {
-        issueCommentTrigger('.*Approved*.')
-    }
+      
     stages {
          stage ('Checkout') {
              steps {

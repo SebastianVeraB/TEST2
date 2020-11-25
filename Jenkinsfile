@@ -24,12 +24,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    pullRequest.merge(commitTitle: 'Make it so..', commitMessage: 'TO BOLDLY GO WHERE NO MAN HAS GONE BEFORE...', mergeMethod: 'squash')
+                        for (review in pullRequest.reviews) {
+                            echo "${review.user} has a review in ${review.state} state for Pull Request. Review body: ${review.body}"
+                        }
                 }
             }
-            when { 
-                environment name: 'GITHUB_REVIEW_STATE', value: 'approved' 
-            }
+            
         }
         
     }

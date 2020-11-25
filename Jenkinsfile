@@ -4,9 +4,7 @@ pipeline {
     skipDefaultCheckout true
     }
      triggers {
-       triggers {
-      pullRequestReview()
-    }
+        pullRequestReview(reviewStates: ['approved'])
     }
     stages {
          stage ('Checkout') {

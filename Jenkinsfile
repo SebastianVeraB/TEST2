@@ -26,6 +26,9 @@ pipeline {
                         for (review in pullRequest.reviews) {
                             echo "${review.user} has a review in ${review.state} state for Pull Request. Review body: ${review.body}"
                         }
+                       if (pullRequest.mergeable) {
+                          pullRequest.merge(commitTitle: 'Make it so..', commitMessage: 'TO BOLDLY GO WHERE NO MAN HAS GONE BEFORE...', mergeMethod: 'squash')
+                      }
                 }
             }
             

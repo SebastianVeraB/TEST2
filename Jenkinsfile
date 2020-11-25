@@ -30,7 +30,7 @@ pipeline {
                         }
                 }
             }
-             when { equals expected: 'APPROVED', actual: review.state }
+            when { expression { return pullRequest.reviews[0]}}
             
         }
         

@@ -1,15 +1,16 @@
 pipeline {
-   triggers {
-  genericTrigger {
-   genericVariables {
-    genericVariable {
-     key("PR_STATE")
-     value("\$.review.state")
-    }
-   }
-       token('review')
+  triggers {
+    GenericTrigger(
+     genericVariables: [
+      [key: 'ref', value: '$.review.state']
+     ],
+
+     causeString: 'Triggered on $ref',
+
+     token: 'review',
+    
+    )
   }
-   }
     agent any
     stages {
         stage('SFDX Check Deploy') {

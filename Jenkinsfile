@@ -1,7 +1,15 @@
 pipeline {
-     triggers {
-        issueCommentTrigger('.*test*.')
+   triggers {
+  genericTrigger {
+   genericVariables {
+    genericVariable {
+     key("PR_STATE")
+     value("\$.review.state")
     }
+   }
+       token('review')
+  }
+   }
     agent any
     stages {
         stage('SFDX Check Deploy') {

@@ -1,21 +1,9 @@
 pipeline {
      triggers {
-        issueCommentTrigger('*test*')
+        issueCommentTrigger('.*test*.')
     }
     agent any
-    options {
-    skipDefaultCheckout true
-    }
-      
     stages {
-         stage ('Checkout') {
-             steps {
-                 publishChecks conclusion: 'NEUTRAL', name: 'Deployment check', status: 'IN_PROGRESS', title: 'Running...'
-                  checkout scm
-             } 
-         }
-    
-
         stage('SFDX Check Deploy') {
             steps {
                 publishChecks name: 'Deployment check', summary: 'This Pull Request is deployable', text: 'Reported Apex code coverage: ', title: 'Sucessful'
@@ -23,6 +11,7 @@ pipeline {
         }
         
         stage('Deploy') {
+            when { expression { return pullRequest.reviews[0]}}
             steps {
                 script {
                         for (review in pullRequest.reviews) {
@@ -30,7 +19,7 @@ pipeline {
                         }
                 }
             }
-            when { expression { return pullRequest.reviews[0]}}
+            
             
         }
         

@@ -16,6 +16,9 @@ pipeline {
         stage('SFDX Check Deploy') {
             steps {
                 publishChecks name: 'Deployment check', summary: 'This Pull Request is deployable', text: 'Reported Apex code coverage: ', title: 'Sucessful'
+              script {
+                pullRequest.addLabel('Deployable')
+              }
             }
         }
         

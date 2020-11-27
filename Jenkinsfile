@@ -11,7 +11,7 @@ pipeline {
   }
     agent any
   tools {
-    toolbelt 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+    com.cloudbees.jenkins.plugins.customtools.CustomTool 'toolbelt'
   }
     stages {
         stage('SFDX Check Deploy') {

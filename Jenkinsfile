@@ -10,15 +10,13 @@ pipeline {
     )
   }
     agent any
-   environment {
-      toolbelt = tool name: 'toolbelt', type:     'com.cloudbees.jenkins.plugins.customtools.CustomTool'
-  }
     stages {
         stage('SFDX Check Deploy') {
             steps {
-                publishChecks name: 'Deployment check', summary: 'This Pull Request is deployable', text: 'Reported Apex code coverage: ', title: 'Sucessful'
               script {
-                rc = command "${toolbelt}/sfdx --version"
+                def toolbelt = tool 'toolbelt' 
+                sh script: "${toolbelt}/sfdx --version"
+                
                 pullRequest.addLabel('Deployable')
               }
             }

@@ -1,4 +1,3 @@
-def toolbelt = tool 'toolbelt'
 pipeline {
   triggers {
     GenericTrigger(
@@ -11,12 +10,15 @@ pipeline {
     )
   }
     agent any
+  tools {
+    toolbelt 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+  }
     stages {
         stage('SFDX Check Deploy') {
             steps {
                 publishChecks name: 'Deployment check', summary: 'This Pull Request is deployable', text: 'Reported Apex code coverage: ', title: 'Sucessful'
               script {
-                rc = command "${toolbelt}/sfdx --version"
+                sh 'sfdx --version'
                 pullRequest.addLabel('Deployable')
               }
             }

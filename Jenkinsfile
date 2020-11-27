@@ -1,11 +1,10 @@
+def toolbelt = tool 'toolbelt'
 pipeline {
   triggers {
     GenericTrigger(
      genericVariables: [
       [key: 'ref', value: '$.review.state']
      ],
-
-     causeString: 'Triggered on $ref',
 
      token: 'review',
     
@@ -15,8 +14,10 @@ pipeline {
     stages {
         stage('SFDX Check Deploy') {
             steps {
+               rc = command "${toolbelt}/sfdx --version"
                 publishChecks name: 'Deployment check', summary: 'This Pull Request is deployable', text: 'Reported Apex code coverage: ', title: 'Sucessful'
               script {
+                rc = command "${toolbelt}/sfdx --version"
                 pullRequest.addLabel('Deployable')
               }
             }

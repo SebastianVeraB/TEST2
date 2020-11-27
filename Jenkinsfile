@@ -14,7 +14,6 @@ pipeline {
     stages {
         stage('SFDX Check Deploy') {
             steps {
-               rc = command "${toolbelt}/sfdx --version"
                 publishChecks name: 'Deployment check', summary: 'This Pull Request is deployable', text: 'Reported Apex code coverage: ', title: 'Sucessful'
               script {
                 rc = command "${toolbelt}/sfdx --version"

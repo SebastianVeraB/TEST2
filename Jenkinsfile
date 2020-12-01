@@ -13,6 +13,7 @@ pipeline {
     environment {
         QA_USER = credentials('Jenkins_QA_User')
         QA_CONSUMER_KEY = credentials('QA_CONSUMER_KEY')
+        
     }
     stages {
         stage('SFDX Check Deploy') {
@@ -26,11 +27,11 @@ pipeline {
                         echo "Authenticating into Org"
                     
                         def toolbelt = tool 'toolbelt' 
-                        result = sh (script: "${toolbelt}/sfdx force:auth:jwt:grant --clientid ${QA_CONSUMER_KEY} -u ${QA_USER} -f ${QaKey} -r https://login.salesforce.com",  returnStatus: true)
+                        result = sh (script: "${toolbelt}/sfdx force:auth:jwt:grant --clientid ${QA_CONSUMER_KEY} -u ${QA_USER} -f ${QaKey} -r https://login.salesforce.com -a QAMerge",  returnStatus: true)
                         
                         if(result == 0) {
                             echo "Starting Deploy Check"
-                             result = sh (script: "${toolbelt}/sfdx force:source:deploy --checkonly -l RunAllTestsInOrg -p force-app/main/default/",  returnStatus: true)
+                             result = sh (script: "${toolbelt}/sfdx force:source:deploy --checkonly -u QAMerge -l RunAllTestsInOrg -p force-app/main/default/",  returnStatus: true)
                              if(result == 0) {
                                  
                                 pullRequest.addLabel(env.Deployable)

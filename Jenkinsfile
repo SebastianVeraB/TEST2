@@ -69,7 +69,7 @@ pipeline {
                                                 
                                                 outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
                                                 println warning
-                                                    if(warning.name in String) {
+                                                    if(warning.name in String && warning.name != '') {
                                                           summary += '<li>'+ warning.name + ': ' + warning.message + '</li>'
                                                     }
                                                     else {

@@ -24,7 +24,7 @@ pipeline {
                     
                     
                     script {
-                        publishChecks conclusion: 'NEUTRAL', name: 'Deploy check', text: '## Text', title: 'In Progress'
+                        publishChecks conclusion: 'NONE', name: 'Deploy check', title: 'In Progress'
                         CURRENT_USER = QA_USER
                         echo "Authenticating into Org"
                         
@@ -68,6 +68,7 @@ pipeline {
                                                 '<ul>'
                                                 
                                                 outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
+                                                println warning
                                                     if(warning.name in String) {
                                                           summary += '<li>'+ warning.name + ': ' + warning.message + '</li>'
                                                     }

@@ -66,18 +66,22 @@ pipeline {
                                                 '</ul>' +
                                                 '<h5 id="code-coverage-warnings">Code coverage warnings</h5>'+
                                                 '<ul>'
-                                                
-                                                outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
-                                                println warning
-                                                    if(warning.name in String && warning.name != '') {
-                                                          summary += '<li>'+ warning.name + ': ' + warning.message + '</li>'
-                                                    }
-                                                    else {
-                                                          summary += '<li>' + warning.message + '</li>'
-                                                    }
+                                                if(outputObj.result.details.runTestResult.codeCoverageWarnings instanceof List){
+                                                    outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
+                                               
+                                                        if(warning.name in String) {
+                                                              summary += '<li>'+ warning.name + ': ' + warning.message + '</li>'
+                                                        }
+                                                        else {
+                                                              summary += '<li>' + warning.message + '</li>'
+                                                        }
                                                   
-                                                }
+                                                    }
                                                 
+                                                }else {
+                                                      summary += '<li>' + warning.message + '</li>'
+                                                }
+                                               
                                                 
                                 publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, text: '## Text', title: 'Fail'
                                 pullRequest.addLabel(env.NotDeployable)

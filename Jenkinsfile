@@ -24,7 +24,7 @@ pipeline {
                     
                     
                     script {
-                        publishChecks conclusion: 'NEUTRAL', name: 'Deploy check', summary: summary, text: '## Text', title: 'In Progress'
+                        publishChecks conclusion: 'NEUTRAL', name: 'Deploy check', text: '## Text', title: 'In Progress'
                         CURRENT_USER = QA_USER
                         echo "Authenticating into Org"
                         

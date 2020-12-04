@@ -53,7 +53,6 @@ pipeline {
                              } else {
                                 echo "fail deploy check"
                                 def output = readFile('output.txt').trim()
-                                println output
                                 def outputObj = readJSON text: output
                                 def summary = '<h3 id="summary-">Summary:</h3><hr>' +
                                                 '<h4 id="metadata">Metadata</h4>' +
@@ -89,7 +88,7 @@ pipeline {
                               if(outputObj.result.details.runTestResult.numFailures > 0) {
                                 
                                     outputObj.result.details.runTestResult.failures.each { failure ->
-                                    println failure
+                                   
                                     apexFailures += '<li>Class: ' + failure.name + '</li>' +
                                                     '<li>Method: ' + failure.methodName + '</li>' +
                                                     '<li>Error message: ' + failure.message + '</li>' +

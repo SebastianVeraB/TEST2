@@ -21,8 +21,13 @@ pipeline {
     }
     stages {
         stage('Init') {
-            toolbelt =  tool 'toolbelt' 
-            bot = load "JenkinsHelper.groovy"
+            steps {
+                script {
+                    toolbelt =  tool 'toolbelt' 
+                    bot = load "JenkinsHelper.groovy"
+                }
+            }
+            
         }
 
         stage('SFDX Check Deploy') {

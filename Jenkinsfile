@@ -92,9 +92,9 @@ pipeline {
                                                     '<li>Method: ' + failure.methodName + '</li>' +
                                                     '<li>Error message: ' + failure.message + '</li>' +
                                                     '<li>Stacktrace: ' + failure.stackTrace + '</li>'
-                              }
+                                    }
                                 summary += apexFailures
-                                  
+                              }  
                                   
                                
                                 publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, title: 'Fail'
@@ -104,9 +104,9 @@ pipeline {
                                     pullRequest.removeLabel(env.Deployable)
                                 }
                                 sh 'rm output.txt'
-                             }
+                             
                         
-                        else {
+                        }else {
                              echo "Authentication failed"
                            
                         }

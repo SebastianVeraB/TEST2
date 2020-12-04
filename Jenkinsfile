@@ -65,11 +65,11 @@ pipeline {
                                                 '<ul>' +
                                                 '<li>Failed test: ' + outputObj.result.numberTestErrors + '</li>' +
                                                 '<li>Test total: ' + outputObj.result.numberTestsTotal + '</li>' +
-                                                '</ul>' +
-                                                '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
-                                                '<ul>'
+                                                '</ul>' 
                                                 if(outputObj.result.details.runTestResult.containsKey('codeCoverageWarnings') && outputObj.result.details.runTestResult.codeCoverageWarnings instanceof List){
-                                                    outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
+                                                  summary+= '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
+                                                '<ul>'  
+                                                  outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
                                                
                                                         if(warning.name in String) {
                                                               summary += '<li>'+ warning.name + ': ' + warning.message + '</li>'
@@ -79,24 +79,26 @@ pipeline {
                                                         }
                                                   
                                                     }
+                                                  summary+= '</ul>'
                                                 
                                                 }else {
-                                                      summary += '<li>' +  outputObj.result.details.runTestResult.codeCoverageWarnings.message + '</li>'
+                                                    summary+= '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
+                                                '<ul>'  + '<li>' +  outputObj.result.details.runTestResult.codeCoverageWarnings.message + '</li></ul>'
                                                 }
                               def details = ''
                               
                               def apexFailures = ''
                               if(outputObj.result.details.runTestResult.numFailures > 0) {
-                                
+                                apexFailures = '<h4 id="apex-test-failures">Apex test failures</h4><ul>'
                                     outputObj.result.details.runTestResult.failures.each { failure ->
                                       if(failure != null) {
-                                        println failure
                                     apexFailures += '<li>Class: ' + failure.name + '</li>' +
                                                     '<li>Method: ' + failure.methodName + '</li>' +
                                                     '<li>Error message: ' + failure.message + '</li>' +
                                                     '<li>Stacktrace: ' + failure.stackTrace + '</li>'
                                       }
                                     }
+                                apexFailures += '</ul>'
                               }  
                                   
                                 details += apexFailures

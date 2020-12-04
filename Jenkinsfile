@@ -146,7 +146,6 @@ pipeline {
         stage('logout') {
             steps{
                 script{
-                    def toolbelt = tool 'toolbelt' 
                     sh (script: "${toolbelt}/sfdx force:auth:logout --targetusername ${CURRENT_USER} -p")
                 }
             }

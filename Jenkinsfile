@@ -79,7 +79,7 @@ pipeline {
                                                     }
                                                 
                                                 }else {
-                                                      summary += '<li>' + warning.message + '</li>'
+                                                      summary += '<li>' +  outputObj.result.details.runTestResult.codeCoverageWarnings.message + '</li>'
                                                 }
                                                
                                                 

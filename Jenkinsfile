@@ -1,3 +1,6 @@
+def bot
+def toolbelt
+
 pipeline {
   triggers {
     GenericTrigger(
@@ -17,43 +20,45 @@ pipeline {
         
     }
     stages {
+        stage('Init') {
+            toolbelt =  tool 'toolbelt' 
+            bot = load "JenkinsHelper.groovy"
+        }
+
         stage('SFDX Check Deploy') {
             when { expression { return ! pullRequest.labels.contains(env.Deployable)}}
             steps {
                 withCredentials([file(credentialsId: 'QA_KEY', variable: 'QaKey')]) {
                     
-                    
                     script {
                         publishChecks name: 'Deploy check', title: 'Job will start shortly...', status: 'QUEUED', conclusion: 'NONE'
+                        
                         CURRENT_USER = QA_USER
                         echo "Authenticating into Org"
                         
                         def deployCheckSuccess = true
                         def result = null
-                        def toolbelt = tool 'toolbelt' 
-                        
+                       
                         authorized = sh (script: "${toolbelt}/sfdx force:auth:jwt:grant --clientid ${QA_CONSUMER_KEY} -u ${CURRENT_USER} -f ${QaKey} -r https://login.salesforce.com --setdefaultusername",  returnStatus: true) == 0
                         
                         if(authorized) {
                             echo "Starting Deploy Check"
+
                             publishChecks name: 'Deploy check', title: 'In Progress', status: 'IN_PROGRESS', conclusion: 'NONE'
                             deployCheckSuccess = sh (script: "${toolbelt}/sfdx force:source:deploy --checkonly -l RunLocalTests -p force-app/main/default/ --json > output.txt",  returnStatus: true) == 0
-                                
                             
-                            echo "end sfdx command"
-                             
                             if(deployCheckSuccess) {
-                                echo "got success"
+                                echo "Deploy check OK"
                                 publishChecks name: 'Deploy check', title: 'Success '
                                 pullRequest.addLabel(env.Deployable)
                               
                                 if (pullRequest.labels.contains(env.NotDeployable)) {
                                     pullRequest.removeLabel(env.NotDeployable)
                                 }
-                             } else {
-                                echo "fail deploy check"
-                                def output = readFile('output.txt').trim()
-                              println output
+                            } else {
+                                echo "Fail deploy check"
+                                def output = bot.getSFDXOutcome()
+                                println output
                                 def outputObj = readJSON text: output
                                 def summary = '<h3 id="summary-">Summary:</h3><hr>' +
                                                 '<h4 id="metadata">Metadata</h4>' +

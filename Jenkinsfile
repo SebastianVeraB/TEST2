@@ -66,7 +66,7 @@ pipeline {
                                                 '<li>Failed test: ' + outputObj.result.numberTestErrors + '</li>' +
                                                 '<li>Test total: ' + outputObj.result.numberTestsTotal + '</li>' +
                                                 '</ul>' 
-                                                if(outputObj.result.details.runTestResult.containsKey('codeCoverageWarnings'){
+                                                if(outputObj.result.details.runTestResult.containsKey('codeCoverageWarnings')){
                                                 if(outputObj.result.details.runTestResult.codeCoverageWarnings instanceof List){
                                                   summary+= '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
                                                 '<ul>'  

@@ -89,6 +89,7 @@ pipeline {
                                 
                                     outputObj.result.details.runTestResult.failures.each { failure ->
                                       if(failure != null) {
+                                        println failure
                                     apexFailures += '<li>Class: ' + failure.name + '</li>' +
                                                     '<li>Method: ' + failure.methodName + '</li>' +
                                                     '<li>Error message: ' + failure.message + '</li>' +

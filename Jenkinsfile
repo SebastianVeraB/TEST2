@@ -44,7 +44,8 @@ pipeline {
                              
                             if(deployCheckSuccess) {
                                 echo "got success"
-                                //pullRequest.addLabel(env.Deployable)
+                                publishChecks name: 'Deploy check', title: 'Success '
+                                pullRequest.addLabel(env.Deployable)
                               
                                 if (pullRequest.labels.contains(env.NotDeployable)) {
                                     pullRequest.removeLabel(env.NotDeployable)

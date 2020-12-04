@@ -82,7 +82,7 @@ pipeline {
                                                 }else {
                                                       summary += '<li>' +  outputObj.result.details.runTestResult.codeCoverageWarnings.message + '</li>'
                                                 }
-                              def details += '<hr><h3 id="details">Details</h3>'
+                              def details = '<hr><h3 id="details">Details</h3>'
                               
                               def apexFailures = ''
                               if(outputObj.result.details.runTestResult.numFailures > 0) {

@@ -55,18 +55,18 @@ pipeline {
                                 def output = readFile('output.txt').trim()
                                 println output
                                 def outputObj = readJSON text: output
-                                def summary = '<h3 id="summary-">Summary:</h3>' +
-                                                '<h5 id="metadata">Metadata</h5>' +
+                                def summary = '<h3 id="summary-">Summary:</h3><hr>' +
+                                                '<h4 id="metadata">Metadata</h4>' +
                                                 '<ul>' +
                                                 '<li>Components with errors: ' + outputObj.result.numberComponentErrors + '</li>' +
                                                 '<li>Components total: ' + outputObj.result.numberComponentsTotal + '</li>' +
                                                 '</ul>' +
-                                                '<h5 id="apex-run-test">Apex run test</h5>' +
+                                                '<h4 id="apex-run-test">Apex run test</h4>' +
                                                 '<ul>' +
                                                 '<li>Failed test: ' + outputObj.result.numberTestErrors + '</li>' +
                                                 '<li>Test total: ' + outputObj.result.numberTestsTotal + '</li>' +
                                                 '</ul>' +
-                                                '<h5 id="code-coverage-warnings">Code coverage warnings</h5>'+
+                                                '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
                                                 '<ul>'
                                                 if(outputObj.result.details.runTestResult.codeCoverageWarnings instanceof List){
                                                     outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
@@ -83,7 +83,7 @@ pipeline {
                                                 }else {
                                                       summary += '<li>' +  outputObj.result.details.runTestResult.codeCoverageWarnings.message + '</li>'
                                                 }
-                              def details = '<hr><h3 id="details">Details</h3>'
+                              def details = ''
                               
                               def apexFailures = ''
                               if(outputObj.result.details.runTestResult.numFailures > 0) {

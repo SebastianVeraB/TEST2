@@ -66,7 +66,8 @@ pipeline {
                                                 '<li>Failed test: ' + outputObj.result.numberTestErrors + '</li>' +
                                                 '<li>Test total: ' + outputObj.result.numberTestsTotal + '</li>' +
                                                 '</ul>' 
-                                                if(outputObj.result.details.runTestResult.containsKey('codeCoverageWarnings') && outputObj.result.details.runTestResult.codeCoverageWarnings instanceof List){
+                                                if(outputObj.result.details.runTestResult.containsKey('codeCoverageWarnings'){
+                                                if(outputObj.result.details.runTestResult.codeCoverageWarnings instanceof List){
                                                   summary+= '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
                                                 '<ul>'  
                                                   outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
@@ -84,6 +85,7 @@ pipeline {
                                                 }else {
                                                     summary+= '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
                                                 '<ul>'  + '<li>' +  outputObj.result.details.runTestResult.codeCoverageWarnings.message + '</li></ul>'
+                                                }
                                                 }
                               def details = ''
                               

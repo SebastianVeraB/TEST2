@@ -96,7 +96,7 @@ pipeline {
                               }  
                                   
                                 details += apexFailures
-                                publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, title: 'Fail' text: details
+                                publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, title: 'Fail', text: details
                                 pullRequest.addLabel(env.NotDeployable)
                                 
                                 if (pullRequest.labels.contains(env.Deployable)) {

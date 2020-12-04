@@ -82,8 +82,21 @@ pipeline {
                                                 }else {
                                                       summary += '<li>' +  outputObj.result.details.runTestResult.codeCoverageWarnings.message + '</li>'
                                                 }
-                                               
-                                                
+                              summary += '<hr><h3 id="details">Details</h3>'
+                              
+                              def apexFailures = ''
+                              if(outputObj.result.details.runTestResult.numFailures > 0) {
+                                
+                                    outputObj.result.details.runTestResult.failures.each { failure ->
+                                    apexFailures += '<li>Class: ' + failure.name + '</li>' +
+                                                    '<li>Method: ' + failure.methodName + '</li>' +
+                                                    '<li>Error message: ' + failure.message + '</li>' +
+                                                    '<li>Stacktrace: ' + failure.stackTrace + '</li>'
+                              }
+                                summary += apexFailures
+                                  
+                                  
+                               
                                 publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, title: 'Fail'
                                 pullRequest.addLabel(env.NotDeployable)
                                 

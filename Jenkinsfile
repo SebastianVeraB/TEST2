@@ -53,6 +53,7 @@ pipeline {
                              } else {
                                 echo "fail deploy check"
                                 def output = readFile('output.txt').trim()
+                              println output
                                 def outputObj = readJSON text: output
                                 def summary = '<h3 id="summary-">Summary:</h3><hr>' +
                                                 '<h4 id="metadata">Metadata</h4>' +

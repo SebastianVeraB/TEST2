@@ -82,7 +82,7 @@ pipeline {
                                                 }else {
                                                       summary += '<li>' +  outputObj.result.details.runTestResult.codeCoverageWarnings.message + '</li>'
                                                 }
-                              summary += '<hr><h3 id="details">Details</h3>'
+                              def details += '<hr><h3 id="details">Details</h3>'
                               
                               def apexFailures = ''
                               if(outputObj.result.details.runTestResult.numFailures > 0) {
@@ -93,11 +93,10 @@ pipeline {
                                                     '<li>Error message: ' + failure.message + '</li>' +
                                                     '<li>Stacktrace: ' + failure.stackTrace + '</li>'
                                     }
-                                summary += apexFailures
                               }  
                                   
-                               
-                                publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, title: 'Fail'
+                                details += apexFailures
+                                publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, title: 'Fail' text: details
                                 pullRequest.addLabel(env.NotDeployable)
                                 
                                 if (pullRequest.labels.contains(env.Deployable)) {

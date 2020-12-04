@@ -24,7 +24,7 @@ pipeline {
                     
                     
                     script {
-                        publishChecks name: 'Deploy check', title: 'In Progress', status: 'IN_PROGRESS'
+                        publishChecks name: 'Deploy check', title: 'Job will start shortly...', status: 'QUEUED', conclusion: 'NONE'
                         CURRENT_USER = QA_USER
                         echo "Authenticating into Org"
                         
@@ -36,7 +36,7 @@ pipeline {
                         
                         if(authorized) {
                             echo "Starting Deploy Check"
-                            
+                            publishChecks name: 'Deploy check', title: 'In Progress', status: 'IN_PROGRESS', conclusion: 'NONE'
                             deployCheckSuccess = sh (script: "${toolbelt}/sfdx force:source:deploy --checkonly -l RunLocalTests -p force-app/main/default/ --json > output.txt",  returnStatus: true) == 0
                                 
                             
@@ -84,7 +84,7 @@ pipeline {
                                                 }
                                                
                                                 
-                                publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, text: '## Text', title: 'Fail'
+                                publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, title: 'Fail'
                                 pullRequest.addLabel(env.NotDeployable)
                                 
                                 if (pullRequest.labels.contains(env.Deployable)) {

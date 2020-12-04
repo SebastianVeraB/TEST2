@@ -105,7 +105,7 @@ pipeline {
                                 }
                                 sh 'rm output.txt'
                              }
-                        }
+                        
                         else {
                              echo "Authentication failed"
                            

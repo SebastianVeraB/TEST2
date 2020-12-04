@@ -68,7 +68,7 @@ pipeline {
                                                 '</ul>' +
                                                 '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
                                                 '<ul>'
-                                                if(outputObj.result.details.runTestResult.codeCoverageWarnings instanceof List){
+                                                if(outputObj.result.details.runTestResult.containsKey('codeCoverageWarnings') && outputObj.result.details.runTestResult.codeCoverageWarnings instanceof List){
                                                     outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
                                                
                                                         if(warning.name in String) {

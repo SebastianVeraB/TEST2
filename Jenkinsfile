@@ -88,11 +88,12 @@ pipeline {
                               if(outputObj.result.details.runTestResult.numFailures > 0) {
                                 
                                     outputObj.result.details.runTestResult.failures.each { failure ->
-                                   
+                                      if(failure != null) {
                                     apexFailures += '<li>Class: ' + failure.name + '</li>' +
                                                     '<li>Method: ' + failure.methodName + '</li>' +
                                                     '<li>Error message: ' + failure.message + '</li>' +
                                                     '<li>Stacktrace: ' + failure.stackTrace + '</li>'
+                                      }
                                     }
                               }  
                                   

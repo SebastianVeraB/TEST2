@@ -24,13 +24,16 @@ def getSFDXOutcome() {
     </ul>
     $retrievedCoverageWarnings"""
 
-    def details ="""
-    """
+    def details =""" """
     if(retrievedTestFailures) {
         details += retrievedTestFailures
     }
     else {
         details += retrieveComponentFailures()
+    }
+    if(summary && details) {
+        summary.toString().trim()
+        details.toString().trim()
     }
 
     return [summary, details]    

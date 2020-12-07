@@ -123,7 +123,9 @@ def retrieveComponentFailures(){
     def failuresToReturn = """"""
 
     if(hasComponentFailures()) {
+        echo "there are component failures"
         def componentsFailed = getComponentFailures()
+        println componentsFailed
         failuresToReturn += """<h4 id="code-coverage-warnings">Components failed</h4>
                                 <ul> $componentsFailed </ul>
                             """

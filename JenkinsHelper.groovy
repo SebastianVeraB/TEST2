@@ -9,8 +9,7 @@ def getSFDXOutcome() {
     def retrievedCoverageWarnings =  retrieveCoverageWarnings()
     def retrievedTestFailures = retrieveTestFailures()
 
-    def summary = """
-    <h3 id="summary-">Summary:</h3>
+    def summary = """<h3 id="summary-">Summary:</h3>
     <hr>
     <h4 id="metadata">Metadata</h4>
     <ul>
@@ -32,11 +31,11 @@ def getSFDXOutcome() {
         details += retrieveComponentFailures()
     }
   if(details) {
-        summary.toString().trim()
+        summary.toString().replaceAll( /\n\s*/, " " )
         details.toString().trim()
     }
     else {
-        summary.toString().trim()
+        summary.toString().replaceAll( /\n\s*/, " " )
         details = ''
     }
 

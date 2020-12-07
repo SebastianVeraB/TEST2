@@ -128,6 +128,7 @@ def retrieveComponentFailures(){
                                 <ul> $componentsFailed </ul>
                             """
     }
+    return failuresToReturn
 }
 
 def getComponentFailures(){
@@ -144,7 +145,6 @@ def getComponentFailures(){
 }
 
 def hasComponentFailures(){
-    println SFDXResponse.result.details.containsKey('componentFailures')
     return SFDXResponse.result.details.containsKey('componentFailures')
 }
 

@@ -31,9 +31,13 @@ def getSFDXOutcome() {
     else {
         details += retrieveComponentFailures()
     }
-    if(summary && details) {
+  if(details) {
         summary.toString().trim()
         details.toString().trim()
+    }
+    else {
+        summary.toString().trim()
+        details = ''
     }
 
     return [summary, details]    
@@ -140,6 +144,7 @@ def getComponentFailures(){
 }
 
 def hasComponentFailures(){
+    echo SFDXResponse.result.details.containsKey('componentFailures')
     return SFDXResponse.result.details.containsKey('componentFailures')
 }
 

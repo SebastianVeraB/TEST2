@@ -62,59 +62,8 @@ pipeline {
                                 }
                             } else {
                                 echo "Fail deploy check"
-                                def output = bot.getSFDXOutcome()
-                                println output
-                                def outputObj = readJSON text: output
-                                def summary = '<h3 id="summary-">Summary:</h3><hr>' +
-                                                '<h4 id="metadata">Metadata</h4>' +
-                                                '<ul>' +
-                                                '<li>Components with errors: ' + outputObj.result.numberComponentErrors + '</li>' +
-                                                '<li>Components total: ' + outputObj.result.numberComponentsTotal + '</li>' +
-                                                '</ul>' +
-                                                '<h4 id="apex-run-test">Apex run test</h4>' +
-                                                '<ul>' +
-                                                '<li>Failed test: ' + outputObj.result.numberTestErrors + '</li>' +
-                                                '<li>Test total: ' + outputObj.result.numberTestsTotal + '</li>' +
-                                                '</ul>' 
-                                                if(outputObj.result.details.runTestResult.containsKey('codeCoverageWarnings')){
-                                                if(outputObj.result.details.runTestResult.codeCoverageWarnings instanceof List){
-                                                  summary+= '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
-                                                '<ul>'  
-                                                  outputObj.result.details.runTestResult.codeCoverageWarnings.each { warning ->
-                                               
-                                                        if(warning.name in String) {
-                                                              summary += '<li>'+ warning.name + ': ' + warning.message + '</li>'
-                                                        }
-                                                        else {
-                                                              summary += '<li>' + warning.message + '</li>'
-                                                        }
-                                                  
-                                                    }
-                                                  summary+= '</ul>'
-                                                
-                                                }else {
-                                                    summary+= '<h4 id="code-coverage-warnings">Code coverage warnings</h4>'+
-                                                '<ul>'  + '<li>' +  outputObj.result.details.runTestResult.codeCoverageWarnings.message + '</li></ul>'
-                                                }
-                                                }
-                              def details = ''
-                              
-                              def apexFailures = ''
-                              if(outputObj.result.details.runTestResult.numFailures > 0) {
-                                apexFailures = '<h4 id="apex-test-failures">Apex test failures</h4><ul>'
-                                    outputObj.result.details.runTestResult.failures.each { failure ->
-                                      if(failure != null) {
-                                    apexFailures += '<li>Class: ' + failure.name + '</li>' +
-                                                    '<li>Method: ' + failure.methodName + '</li>' +
-                                                    '<li>Error message: ' + failure.message + '</li>' +
-                                                    '<li>Stacktrace: ' + failure.stackTrace + '</li>'
-                                      }
-                                    }
-                                apexFailures += '</ul>'
-                              }  
-                                  
-                                details += apexFailures
-                                publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: summary, title: 'Fail', text: details
+                                def outcome = bot.getSFDXOutcome()
+                                publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: outcome[0], title: 'Fail', text: outcome[1]
                                 pullRequest.addLabel(env.NotDeployable)
                                 
                                 if (pullRequest.labels.contains(env.Deployable)) {

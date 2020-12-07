@@ -144,7 +144,7 @@ def getComponentFailures(){
 }
 
 def hasComponentFailures(){
-    echo SFDXResponse.result.details.containsKey('componentFailures')
+    println SFDXResponse.result.details.containsKey('componentFailures')
     return SFDXResponse.result.details.containsKey('componentFailures')
 }
 

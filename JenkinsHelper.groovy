@@ -144,6 +144,7 @@ def getComponentFailures(){
                                                 <li>Problem Description: $componentFailure.problem</li>
                                             </ul>"""
     }
+    return failureComponentsToReturn
 }
 
 def hasComponentFailures(){

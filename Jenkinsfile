@@ -83,14 +83,15 @@ pipeline {
         }
         
         stage('Deploy') {
-            when { expression { return pullRequest.reviews[0]}}
+            when { expression { return pullRequest.mergeable && pullRequest.labels.contains(env.Deployable)}}
             steps {
                 script {
-                        for (review in pullRequest.reviews) {
-                            echo "${review.user} has a review in ${review.state} state for Pull Request. Review body: ${review.body}"
-                        }
-                       if (pullRequest.mergeable) {
-                          pullRequest.merge(commitTitle: 'Make it so..', commitMessage: 'TO BOLDLY GO WHERE NO MAN HAS GONE BEFORE...', mergeMethod: 'squash')
+                        publishChecks name: 'Deploy Job', title: 'In Progress', status: 'IN_PROGRESS', conclusion: 'NONE'
+                        deploySuccess = bot.deploy()
+                        if(deploySuccess) {
+                            pullRequest.merge(commitTitle: 'Commit Title', commitMessage: 'Commit Message.', mergeMethod: 'squash')
+                        } 
+                        
                       }
                 }
             }

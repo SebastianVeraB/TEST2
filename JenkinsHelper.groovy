@@ -1,5 +1,9 @@
 def SFDXResponse
 
+def deploy(){
+    return sh (script: "${toolbelt}/sfdx force:source:deploy -l RunLocalTests -p force-app/main/default/ --json > deployStatus.txt",  returnStatus: true) == 0
+}
+
 def getSFDXOutcome() {
 
     def output = readFile('output.txt').trim()

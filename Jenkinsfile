@@ -98,7 +98,7 @@ pipeline {
             }
             
             
-        }
+        
         stage('logout') {
             steps{
                 script{

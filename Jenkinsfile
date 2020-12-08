@@ -76,6 +76,7 @@ pipeline {
                              echo "Authentication failed"
                            
                         }
+                        echo pullRequest.mergeable
                         
                     }
                 }

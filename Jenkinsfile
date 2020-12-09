@@ -39,6 +39,7 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: 'test', keyFileVariable: 'privateKey', passphraseVariable: '', usernameVariable: '')]) {
                         try {
                             echo "starting custom check"
+                            println check_runs
                             check_runs.buildGithubCheck('TEST2', pullRequest.commits.last().sha, privateKey, 'success', "build")
                         } catch(Exception e) {
                            // check_runs.buildGithubCheck(<REPO_NAME>, <COMMIT_ID>, privateKey, 'failure', "build")

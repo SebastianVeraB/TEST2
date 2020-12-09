@@ -64,7 +64,10 @@ def setCheckName(repository, checkName, status, previousDay, requestMethod, comm
         updateCheckRun = ["name":"${checkName}", 
                           "status": "in_progress", 
                           "conclusion":"${status}", 
-                          "completed_at": "${previousDay}"]
+                          "completed_at": "${previousDay}",
+                          "object" : {"title": "title",
+                                        "summary" : "summary",
+                                        "text" : "text"}]
 
 
         def url = "https://api.github.com/repos/${ORGANIZATION_NAME}/${repository}/check-runs"

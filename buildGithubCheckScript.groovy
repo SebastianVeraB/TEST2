@@ -61,21 +61,12 @@ def getPreviousCheckNameRunID(repository, commitID, token, checkName) {
 def setCheckName(repository, checkName, status, previousDay, requestMethod, commitID=null, check_run_id=null) {
     try {
         def jsonCheckRun = new groovy.json.JsonBuilder()
-        def root = jsonCheckRun.name {
-            conclusion 'success'
-            completed_at "${previousDay}"
-            output{
-                title 'testing title'
-                summary 'testing summary'
-                text 'testing text'
-            }
-        }
         updateCheckRun = ["name":"test", 
                           "conclusion":"failure", 
                           "completed_at": "${previousDay}",
-                          "object" : ["title": "title",
-                                        "summary" : "summary",
-                                        "text" : "text"]]
+                          "output" : ["title": "test title",
+                                        "summary" : "test summary",
+                                        "text" : "test text"]]
 
 
         def url = "https://api.github.com/repos/${ORGANIZATION_NAME}/${repository}/check-runs"

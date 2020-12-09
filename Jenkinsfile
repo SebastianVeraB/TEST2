@@ -1,6 +1,6 @@
 def bot
 def toolbelt
-def check_runs = new com.functions.buildGithubCheckScript()
+def check_runs
 
 
 pipeline {
@@ -23,6 +23,16 @@ pipeline {
     }
     
     stages {
+         stage('Init') {
+            steps {
+                script {
+                    toolbelt =  tool 'toolbelt' 
+                    bot = load "JenkinsHelper.groovy"
+                    check_runs = load 'buildGithubCheckScript.groovy'
+                }
+            }
+            
+        }
          stage("Build") {
             steps {
                 script {

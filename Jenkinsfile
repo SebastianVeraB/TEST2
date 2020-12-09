@@ -1,5 +1,7 @@
 def bot
 def toolbelt
+def check_runs = new com.functions.buildGithubCheckScript()
+
 
 pipeline {
   triggers {
@@ -19,7 +21,23 @@ pipeline {
         QA_CONSUMER_KEY = credentials('QA_CONSUMER_KEY')
         
     }
+    
     stages {
+         stage("Build") {
+            steps {
+                script {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'test', keyFileVariable: 'privateKey', passphraseVariable: '', usernameVariable: '')]) {
+                        try {
+                            echo "starting custom check"
+                            check_runs.buildGithubCheck(<REPO_NAME>, <COMMIT_ID>, privateKey, 'success', "build")
+                        } catch(Exception e) {
+                            check_runs.buildGithubCheck(<REPO_NAME>, <COMMIT_ID>, privateKey, 'failure', "build")
+                            echo "Exception: ${e}"
+                        }
+                    }
+                }
+            }
+        }/*
         stage('Init') {
             steps {
                 script {
@@ -105,7 +123,7 @@ pipeline {
                     sh (script: "${toolbelt}/sfdx force:auth:logout --targetusername ${CURRENT_USER} -p")
                 }
             }
-        }
+        }*/
         
     }
 }

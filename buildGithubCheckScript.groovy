@@ -61,9 +61,8 @@ def getPreviousCheckNameRunID(repository, commitID, token, checkName) {
 def setCheckName(repository, checkName, status, previousDay, requestMethod, commitID=null, check_run_id=null) {
     try {
         def jsonCheckRun = new groovy.json.JsonBuilder()
-        updateCheckRun = ["name":"${checkName}", 
-                          "status": "in_progress", 
-                          "conclusion":"${status}", 
+        updateCheckRun = ["name":"test", 
+                          "conclusion":"failure", 
                           "completed_at": "${previousDay}",
                           "object" : ["title": "title",
                                         "summary" : "summary",

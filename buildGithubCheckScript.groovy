@@ -78,7 +78,7 @@ def setCheckName(repository, checkName, status, previousDay, requestMethod, comm
         }
 
         // Cast map to json
-        //jsonCheckRun updateCheckRun
+        jsonCheckRun updateCheckRun
 
         def httpConn = new URL(url).openConnection();
         setRequestMethod(httpConn, requestMethod);

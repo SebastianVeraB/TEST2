@@ -64,7 +64,7 @@ def setCheckName(repository, checkName, status, previousDay, requestMethod, comm
         updateCheckRun = ["name":"${checkName}", 
                           "status": "in_progress", 
                           "conclusion":"${status}", 
-                          "completed_at": "${previousDay}"
+                          "completed_at": "${previousDay}",
                            "actions": [{
                                         "label": "WOW",
                                         "description": "Let us fix that for you",

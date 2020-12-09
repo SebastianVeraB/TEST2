@@ -89,7 +89,7 @@ def getRSAPrivateKey(privateKey) {
     try {
         String privateKeyPEM = readFile privateKey
         privateKeyPEM = privateKeyPEM.replace("-----BEGIN CERTIFICATE-----\n", "");
-        privateKeyPEM = privateKeyPEM.replace("-----END CERTIFICATE-----", "");
+        privateKeyPEM = privateKeyPEM.replace("\n-----END CERTIFICATE-----", "");
 
         byte[] encoded = Base64.decodeBase64(privateKeyPEM);
         KeyFactory kf = KeyFactory.getInstance("RSA");

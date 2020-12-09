@@ -173,20 +173,11 @@ def buildGithubCheck(repository, commitID, privateKey, status, checkName) {
         error "Authentication request failed, status code: ${getStatusCode}"
     }
     token = getToken(jsonWebToken)
-  
-    try {
-        checkName_run_id = getPreviousCheckNameRunID(repository, commitID, token, checkName)
-    } catch(Exception e) {
-        echo "Exception: ${e}"
-        echo "Check name does not exist"
-    }
 
-    if (checkName_run_id) {
-        getStatusCode = setCheckName(repository, checkName, status, currentTime, "PATCH", commitID, checkName_run_id)
-    } else {
-        echo "creating new check run"
-        getStatusCode = setCheckName(repository, checkName, status, previousDay, "POST", commitID)
-    }
+   
+    echo "creating new check run"
+    getStatusCode = setCheckName(repository, checkName, status, currentTime, "POST", commitID)
+    
     if (!(getStatusCode in [200,201])) {
         error "Failed to create a check run, status code: ${getStatusCode}"
     }

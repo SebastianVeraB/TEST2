@@ -184,6 +184,7 @@ def buildGithubCheck(repository, commitID, privateKey, status, checkName) {
     if (checkName_run_id) {
         getStatusCode = setCheckName(repository, checkName, status, currentTime, "PATCH", commitID, checkName_run_id)
     } else {
+        echo "creating new check run"
         getStatusCode = setCheckName(repository, checkName, status, previousDay, "POST", commitID)
     }
     if (!(getStatusCode in [200,201])) {

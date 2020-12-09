@@ -37,6 +37,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: 'test', keyFileVariable: 'privateKey', passphraseVariable: '', usernameVariable: '')]) {
+                        check_runs = load 'buildGithubCheckScript.groovy'
                         try {
                             echo "starting custom check"
                             println check_runs

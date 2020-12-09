@@ -61,6 +61,15 @@ def getPreviousCheckNameRunID(repository, commitID, token, checkName) {
 def setCheckName(repository, checkName, status, previousDay, requestMethod, commitID=null, check_run_id=null) {
     try {
         def jsonCheckRun = new groovy.json.JsonBuilder()
+        def root = jsonCheckRun.name {
+            conclusion 'success'
+            completed_at "${previousDay}"
+            output{
+                title 'testing title'
+                summary 'testing summary'
+                text 'testing text'
+            }
+        }
         updateCheckRun = ["name":"test", 
                           "conclusion":"failure", 
                           "completed_at": "${previousDay}",
@@ -78,7 +87,7 @@ def setCheckName(repository, checkName, status, previousDay, requestMethod, comm
         }
 
         // Cast map to json
-        jsonCheckRun updateCheckRun
+        //jsonCheckRun updateCheckRun
 
         def httpConn = new URL(url).openConnection();
         setRequestMethod(httpConn, requestMethod);

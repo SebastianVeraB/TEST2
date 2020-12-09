@@ -45,6 +45,7 @@ def getPreviousCheckNameRunID(repository, commitID, token, checkName) {
         httpConn.setDoOutput(true)
         httpConn.setRequestProperty( 'Authorization', "token ${token}" )
         httpConn.setRequestProperty( 'Accept', 'application/vnd.github.antiope-preview+json' )
+        echo checkRuns
         checkRuns = httpConn.getInputStream().getText();
         def slurperCheckRun = new JsonSlurper()
         def resultMapCheckRun = slurperCheckRun.parseText(checkRuns)

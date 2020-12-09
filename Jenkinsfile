@@ -39,7 +39,7 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: 'test', keyFileVariable: 'privateKey', passphraseVariable: '', usernameVariable: '')]) {
                         try {
                             echo "starting custom check"
-                            check_runs.buildGithubCheck('TEST2', CommitStatus.id, privateKey, 'success', "build")
+                            check_runs.buildGithubCheck('TEST2', commitStatus.id, privateKey, 'success', "build")
                         } catch(Exception e) {
                            // check_runs.buildGithubCheck(<REPO_NAME>, <COMMIT_ID>, privateKey, 'failure', "build")
                             echo "Exception: ${e}"

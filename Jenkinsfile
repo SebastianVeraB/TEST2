@@ -28,7 +28,7 @@ pipeline {
                 script {
                     toolbelt =  tool 'toolbelt' 
                     bot = load "JenkinsHelper.groovy"
-                    check_runs = load 'buildGithubCheckScript.groovy'
+                    check_runs = load "buildGithubCheckScript.groovy"
                 }
             }
             
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: 'test', keyFileVariable: 'privateKey', passphraseVariable: '', usernameVariable: '')]) {
-                        check_runs = load 'buildGithubCheckScript.groovy'
+                   
                         try {
                             echo "starting custom check"
                             println check_runs

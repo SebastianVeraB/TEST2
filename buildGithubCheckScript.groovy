@@ -98,7 +98,7 @@ def getRSAPrivateKey(privateKey) {
         String privateKeyPEM = readFile privateKey
         privateKeyPEM = privateKeyPEM.replace("-----BEGIN CERTIFICATE-----\n", "");
         privateKeyPEM = privateKeyPEM.replace("\n-----END CERTIFICATE-----", "");
-        echo privateKeyPEM
+        
         byte[] encoded = Base64.decodeBase64(privateKeyPEM);
         KeyFactory kf = KeyFactory.getInstance("RSA");
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);
@@ -175,6 +175,7 @@ def buildGithubCheck(repository, commitID, privateKey, status, checkName) {
     def checkName_run_id
   
     jsonWebToken = getJsonWebToken(privateKey)
+    println jsonWebToken
     getStatusCode = validateAuth(jsonWebToken)
     if (!(getStatusCode in [200,201])) {
         error "Authentication request failed, status code: ${getStatusCode}"

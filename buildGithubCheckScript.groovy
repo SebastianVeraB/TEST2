@@ -16,7 +16,7 @@ import java.util.Base64.Decoder
 import org.apache.commons.codec.binary.Base64
 import org.codehaus.groovy.runtime.GStringImpl
 
-APP_ID = '89796'
+APP_ID = '35'
 INSTALLATION_ID = '13426135'
 ORGANIZATION_NAME = 'SebastianVeraB'
 

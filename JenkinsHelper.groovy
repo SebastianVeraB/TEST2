@@ -5,7 +5,11 @@ def deploy(){
     return sh (script: "${toolbelt}/sfdx force:source:deploy -l RunLocalTests -p force-app/main/default/ --json > deployStatus.txt",  returnStatus: true) == 0
 }
 
-def sfdxOutcome(Map args) { "${args.resolution}: ${args.detailLog}" }
+
+class sfdxOutcome{
+    String resolution
+    String detailLog
+}
 
 def getSFDXOutcome() {
 
@@ -39,7 +43,7 @@ def getSFDXOutcome() {
         details += retrieveComponentFailures()
     }
 
-    return sfdxOutcome(resolution: aResolution, detailLog: summary + details)
+    return new sfdxOutcome(resolution: aResolution, detailLog: summary + details)
    
 }
 

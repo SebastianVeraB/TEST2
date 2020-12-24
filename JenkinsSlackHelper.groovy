@@ -2,12 +2,12 @@
 
 def blocks = []
 def deployCheckSubTitle = "A new event at GitHub triggered Calypso Jenkins Automation Deploy Check pipeline"
-def jenkinsLogoURL = "https://user-images.githubusercontent.com/42625211/102991657-6dd22980-44f8-11eb-8bb6-b081a336253e.png"
-def gitHubLogoURL = "https://user-images.githubusercontent.com/42625211/102992734-893e3400-44fa-11eb-8884-b7c983348fa7.png"
-def pullRequestURL = "test pull url"
-def jobURL = "test job url"
-def userName = "test Name url"
-def pRName = "test pr name"
+jenkinsLogoURL = "https://user-images.githubusercontent.com/42625211/102991657-6dd22980-44f8-11eb-8bb6-b081a336253e.png"
+gitHubLogoURL = "https://user-images.githubusercontent.com/42625211/102992734-893e3400-44fa-11eb-8884-b7c983348fa7.png"
+pullRequestURL = "test pull url"
+jobURL = "test job url"
+userName = "test Name url"
+pRName = "test pr name"
 def resolution
 
 currentSubTitle = deployCheckSubTitle

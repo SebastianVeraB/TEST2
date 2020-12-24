@@ -1,7 +1,6 @@
 def bot
 def toolbelt
-def check_runs
-
+def slackBuilder
 
 pipeline {
   triggers {
@@ -21,40 +20,13 @@ pipeline {
         QA_CONSUMER_KEY = credentials('QA_CONSUMER_KEY')
         
     }
-    
     stages {
-         stage('Init') {
-            steps {
-                script {
-                    toolbelt =  tool 'toolbelt' 
-                    bot = load "JenkinsHelper.groovy"
-                    check_runs = load "buildGithubCheckScript.groovy"
-                }
-            }
-            
-        }
-         stage("Build") {
-            steps {
-                script {
-                    withCredentials([sshUserPrivateKey(credentialsId: 'test', keyFileVariable: 'privateKey', passphraseVariable: '', usernameVariable: '')]) {
-                   
-                        try {
-                            echo "starting custom check"
-                            println check_runs
-                            check_runs.buildGithubCheck('TEST2', pullRequest.commits.last().sha, privateKey, 'success', "build")
-                        } catch(Exception e) {
-                           // check_runs.buildGithubCheck(<REPO_NAME>, <COMMIT_ID>, privateKey, 'failure', "build")
-                            echo "Exception: ${e}"
-                        }
-                    }
-                }
-            }
-        }/*
         stage('Init') {
             steps {
                 script {
                     toolbelt =  tool 'toolbelt' 
                     bot = load "JenkinsHelper.groovy"
+                    slackBuilder = load "JenkinsSlackHelper.groovy"
                 }
             }
             
@@ -86,6 +58,8 @@ pipeline {
                                 echo "Deploy check OK"
                                 publishChecks name: 'Deploy check', title: 'Success '
                                 pullRequest.addLabel(env.Deployable)
+                                slackBuilder.setResolution("success")
+                                slackSend(blocks: slackBuilder.buildMessage())
                               
                                 if (pullRequest.labels.contains(env.NotDeployable)) {
                                     pullRequest.removeLabel(env.NotDeployable)
@@ -93,7 +67,9 @@ pipeline {
                             } else {
                                 echo "Fail deploy check"
                                 def outcome = bot.getSFDXOutcome()
-                                publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: outcome[0], title: 'Fail', text: outcome[1]
+                                slackBuilder.setResolution(outcome.resolution)
+                                slackSend(blocks: slackBuilder.buildMessage())
+                                //publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: outcome[0], title: 'Fail', text: outcome[1]
                                 pullRequest.addLabel(env.NotDeployable)
                                 
                                 if (pullRequest.labels.contains(env.Deployable)) {
@@ -135,7 +111,7 @@ pipeline {
                     sh (script: "${toolbelt}/sfdx force:auth:logout --targetusername ${CURRENT_USER} -p")
                 }
             }
-        }*/
+        }
         
     }
 }

@@ -1,8 +1,11 @@
 def SFDXResponse
+def aResolution
 
 def deploy(){
     return sh (script: "${toolbelt}/sfdx force:source:deploy -l RunLocalTests -p force-app/main/default/ --json > deployStatus.txt",  returnStatus: true) == 0
 }
+
+def sfdxOutcome(Map args) { "${args.resolution}: ${args.detailLog}" }
 
 def getSFDXOutcome() {
 
@@ -13,37 +16,30 @@ def getSFDXOutcome() {
     def retrievedCoverageWarnings =  retrieveCoverageWarnings()
     def retrievedTestFailures = retrieveTestFailures()
 
-    def summary = """<h3 id="summary-">Summary:</h3>
-    <hr>
-    <h4 id="metadata">Metadata</h4>
-    <ul>
-    <li>Components with errors:  $SFDXResponse.result.numberComponentErrors </li>
-    <li>Components total: $SFDXResponse.result.numberComponentsTotal </li>
-    </ul>
-    <h4 id="apex-run-test">Apex run test</h4>
-    <ul>
-    <li>Failed test: $SFDXResponse.result.numberTestErrors </li>
-    <li>Test total: $SFDXResponse.result.numberTestsTotal </li>
-    </ul>
+    def summary = """SUMARY
+    
+    Metadata
+    
+    * Components with errors:  $SFDXResponse.result.numberComponentErrors
+    * Components in total: $SFDXResponse.result.numberComponentsTotal 
+    
+    Apex run test
+    
+    * Failed test: $SFDXResponse.result.numberTestErrors 
+    * Test total: $SFDXResponse.result.numberTestsTotal
+    
     $retrievedCoverageWarnings"""
 
-    def details =""" """
+    def details =""" 
+    """
     if(retrievedTestFailures) {
         details += retrievedTestFailures
     }
     else {
         details += retrieveComponentFailures()
     }
-  if(details) {
-        summary.toString().replaceAll( /\n\s*/, " " )
-        details.toString().trim()
-    }
-    else {
-        summary.toString().replaceAll( /\n\s*/, " " )
-        details = ''
-    }
 
-    return [summary, details]    
+    return sfdxOutcome(resolution: aResolution, detailLog: summary + details)
    
 }
 
@@ -51,16 +47,16 @@ def  retrieveCoverageWarnings() {
     def coverageToReturn = """"""
 
         if( hasCoverageWarnigns() ) {
-            coverageToReturn+=   """<h4 id="code-coverage-warnings">Code coverage warnings</h4>"""
+            coverageToReturn+=   """Code coverage warnings"""
             if( hasMultipleCoverageWarnings() ) {
                 def coverageList =  getCoverageWarnings()  
-                coverageToReturn+=   """<ul> 
+                coverageToReturn+=   """
                                         $coverageList 
-                                        </ul>"""
+                                        """
             }else {
-                coverageToReturn+= """<ul>
-                                        <li>$SFDXResponse.result.details.runTestResult.codeCoverageWarnings.message</li>
-                                    </ul>"""
+                coverageToReturn+= """
+                                        * $SFDXResponse.result.details.runTestResult.codeCoverageWarnings.message</li>
+                                    """
             }
         } 
     return coverageToReturn    
@@ -72,10 +68,10 @@ def getCoverageWarnings() {
                             warning ->
                                                
                                 if(warning.name in String) {
-                                        returnString += """<li>$warning.name: $warning.message </li>"""
+                                        returnString += """* $warning.name: $warning.message """
                                 }
                                 else {
-                                        returnString += """<li> $warning.message </li>"""
+                                        returnString += """* $warning.message """
                                 }
     }
     return returnString
@@ -99,10 +95,10 @@ def getTestFailures() {
     SFDXResponse.result.details.runTestResult.failures.each { 
         failure ->
             if(failure != null) {
-                failuresToReturn += """ <li>Class: $failure.name </li>
-                                        <li>Method: $failure.methodName </li>
-                                        <li>Error message: $failure.message </li>
-                                        <li>Stacktrace: $failure.stackTrace </li>"""
+                failuresToReturn += """ * Class: $failure.name 
+                                        * Method: $failure.methodName
+                                        * Error message: $failure.message 
+                                        * Stacktrace: $failure.stackTrace"""
             }
     }
     return failuresToReturn
@@ -113,11 +109,12 @@ def retrieveTestFailures(){
     def failuresToReturn = """"""
 
     if( hasTestFailures() ) {
+        aResolution = "apex fail"
         def testFailures = getTestFailures()
-        failuresToReturn += """<h4 id="apex-test-failures">Apex test failures</h4>
-                            <ul>
-                                $testFailures
-                            </ul>"""
+        failuresToReturn += """Apex test failures
+                            
+                            $testFailures
+                            """
     }  
 }
 
@@ -126,11 +123,13 @@ def retrieveComponentFailures(){
     def failuresToReturn = """"""
 
     if(hasComponentFailures()) {
-        echo "there are component failures"
+        aResolution = "component fail"
+        echo "there are component with failures"
         def componentsFailed = getComponentFailures()
         println componentsFailed
-        failuresToReturn += """<h4 id="code-coverage-warnings">Components failed</h4>
-                                <ul> $componentsFailed </ul>
+        failuresToReturn += """Components failed
+
+                                $componentsFailed 
                             """
     }
     return failuresToReturn
@@ -140,12 +139,12 @@ def getComponentFailures(){
     def failureComponentsToReturn = """"""
     SFDXResponse.result.details.componentFailures.each {
             componentFailure ->
-            failureComponentsToReturn += """<li> $componentFailure.fullName</li>
-                                            <ul>
-                                                <li>Component Type: $componentFailure.componentType</li>
-                                                <li>Problem Type: $componentFailure.problemType</li>
-                                                <li>Problem Description: $componentFailure.problem</li>
-                                            </ul>"""
+            failureComponentsToReturn += """* $componentFailure.fullName
+                                            
+                                                > Component Type: $componentFailure.componentType
+                                                > Problem Type: $componentFailure.problemType
+                                                > Problem Description: $componentFailure.problem
+                                            """
     }
     return failureComponentsToReturn
 }

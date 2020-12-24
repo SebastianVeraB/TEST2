@@ -83,10 +83,10 @@ pipeline {
                       //  }else {
 //echo "Authentication failed"
                            
-                        //}
+                        
                         println pullRequest.mergeable
                         
-                    }
+                    
                 }
             }
         }

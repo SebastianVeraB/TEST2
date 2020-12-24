@@ -67,8 +67,10 @@ pipeline {
                             } else {
                                 echo "Fail deploy check"
                                 def outcome = bot.getSFDXOutcome()
-                                slackBuilder.setResolution(outcome.resolution)
-                                slackSend(blocks: slackBuilder.buildMessage())
+                                println "this is the outcome"
+                                println outcome
+                                slackBuilder.setResolution(outcome.('resolution'))
+                                slackSend(blocks: slackBuilder.buildMessage)
                                 //publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: outcome[0], title: 'Fail', text: outcome[1]
                                 pullRequest.addLabel(env.NotDeployable)
                                 

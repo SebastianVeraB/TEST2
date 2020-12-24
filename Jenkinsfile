@@ -46,16 +46,16 @@ pipeline {
                         def deployCheckSuccess = true
                         def result = null
                        
-                        authorized = sh (script: "${toolbelt}/sfdx force:auth:jwt:grant --clientid ${QA_CONSUMER_KEY} -u ${CURRENT_USER} -f ${QaKey} -r https://login.salesforce.com --setdefaultusername",  returnStatus: true) == 0
+                        //authorized = sh (script: "${toolbelt}/sfdx force:auth:jwt:grant --clientid ${QA_CONSUMER_KEY} -u ${CURRENT_USER} -f ${QaKey} -r https://login.salesforce.com --setdefaultusername",  returnStatus: true) == 0
                         
-                        if(authorized) {
+                       // if(authorized) {
                             echo "Starting Deploy Check"
 
-                            publishChecks name: 'Deploy check', title: 'In Progress', status: 'IN_PROGRESS', conclusion: 'NONE'
-                            deployCheckSuccess = sh (script: "${toolbelt}/sfdx force:source:deploy --checkonly -l RunLocalTests -p force-app/main/default/ --json > output.txt",  returnStatus: true) == 0
+                         //   publishChecks name: 'Deploy check', title: 'In Progress', status: 'IN_PROGRESS', conclusion: 'NONE'
+                           // deployCheckSuccess = sh (script: "${toolbelt}/sfdx force:source:deploy --checkonly -l RunLocalTests -p force-app/main/default/ --json > output.txt",  returnStatus: true) == 0
                             
-                            if(deployCheckSuccess) {
-                                echo "Deploy check OK"
+                           // if(deployCheckSuccess) {
+                             //   echo "Deploy check OK"
                                 publishChecks name: 'Deploy check', title: 'Success '
                                 pullRequest.addLabel(env.Deployable)
                                 slackBuilder.setResolution("success")
@@ -64,8 +64,8 @@ pipeline {
                                 if (pullRequest.labels.contains(env.NotDeployable)) {
                                     pullRequest.removeLabel(env.NotDeployable)
                                 }
-                            } else {
-                                echo "Fail deploy check"
+                          //  } else {
+                           /*     echo "Fail deploy check"
                                 def outcome = bot.getSFDXOutcome()
                                 println "this is the outcome"
                                 println outcome
@@ -78,12 +78,12 @@ pipeline {
                                     pullRequest.removeLabel(env.Deployable)
                                 }
                                 sh 'rm output.txt'
-                             
+                             */
                              }
-                        }else {
-                             echo "Authentication failed"
+                      //  }else {
+//echo "Authentication failed"
                            
-                        }
+                        //}
                         println pullRequest.mergeable
                         
                     }

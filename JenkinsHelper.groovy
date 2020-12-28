@@ -19,19 +19,10 @@ def getSFDXOutcome() {
 
     def retrievedCoverageWarnings =  retrieveCoverageWarnings()
     def retrievedTestFailures = retrieveTestFailures()
+    
 
     def summary = """SUMARY
-    
-    Metadata
-    
-    * Components with errors:  $SFDXResponse.result.numberComponentErrors
-    * Components in total: $SFDXResponse.result.numberComponentsTotal 
-    
-    Apex run test
-    
-    * Failed test: $SFDXResponse.result.numberTestErrors 
-    * Test total: $SFDXResponse.result.numberTestsTotal
-    
+     
     $retrievedCoverageWarnings"""
 
     def details =""" 
@@ -114,6 +105,9 @@ def retrieveTestFailures(){
 
     if( hasTestFailures() ) {
         aResolution = "apex fail"
+        summary += """
+                        * Failed test: $SFDXResponse.result.numberTestErrors 
+                        * Test total: $SFDXResponse.result.numberTestsTotal"""
         def testFailures = getTestFailures()
         failuresToReturn += """Apex test failures
                             
@@ -129,10 +123,13 @@ def retrieveComponentFailures(){
     if(hasComponentFailures()) {
         aResolution = "component fail"
         echo "there are component with failures"
+        summary += """
+        * Components with errors:  $SFDXResponse.result.numberComponentErrors
+        * Components in total: $SFDXResponse.result.numberComponentsTotal """
         def componentsFailed = getComponentFailures()
-        failuresToReturn += """Components failed
+        failuresToReturn += """Failures
 
-                                $componentsFailed 
+    $componentsFailed 
                             """
     }
     return failuresToReturn
@@ -142,11 +139,12 @@ def getComponentFailures(){
     def failureComponentsToReturn = """"""
     SFDXResponse.result.details.componentFailures.each {
             componentFailure ->
-            failureComponentsToReturn += """* $componentFailure.fullName
+            failureComponentsToReturn += """* $componentFailure.fullName    |    $componentFailure.componentType
                                             
-                                                > Component Type: $componentFailure.componentType
-                                                > Problem Type: $componentFailure.problemType
-                                                > Problem Description: $componentFailure.problem
+                                                
+                                                + Type: $componentFailure.problemType
+                                                
+                                                + Description: $componentFailure.problem
                                             """
     }
     return failureComponentsToReturn

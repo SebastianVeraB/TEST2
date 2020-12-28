@@ -90,7 +90,7 @@ def setResolution(aResolution) {
 
 def addSuccessResolution() {
 
-    blocks.add(  [
+    blocks.addAll(  [
                     [
                         "type": "context",
                         "elements": [
@@ -108,7 +108,7 @@ def addSuccessResolution() {
 }
 
 def addFailComponentRessolution() {
-    blocks.add( [
+    blocks.addAll( [
                     [
                         "type": "context",
                         "elements": [
@@ -133,7 +133,7 @@ def addFailComponentRessolution() {
 }
 
 def addApexFailResolution() {
-    blocks.add( [
+    blocks.addAll( [
                     [
                         "type": "context",
                         "elements": [

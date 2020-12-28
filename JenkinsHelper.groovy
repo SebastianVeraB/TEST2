@@ -1,5 +1,6 @@
 def SFDXResponse
 def aResolution
+def summary
 
 def deploy(){
     return sh (script: "${toolbelt}/sfdx force:source:deploy -l RunLocalTests -p force-app/main/default/ --json > deployStatus.txt",  returnStatus: true) == 0
@@ -21,7 +22,7 @@ def getSFDXOutcome() {
     def retrievedTestFailures = retrieveTestFailures()
     
 
-    def summary = """SUMARY
+    summary = """SUMARY
      
     $retrievedCoverageWarnings"""
 
@@ -143,7 +144,7 @@ def getComponentFailures(){
                                             
                                                 
                                                 + Type: $componentFailure.problemType
-                                                
+
                                                 + Description: $componentFailure.problem
                                             """
     }

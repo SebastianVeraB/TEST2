@@ -103,11 +103,11 @@ def retrieveTestFailures(){
 
     if( hasTestFailures() ) {
         aResolution = "apex fail"
-        summary += """
+        failuresToReturn += """
                         * Failed test: $SFDXResponse.result.numberTestErrors 
                         * Test total: $SFDXResponse.result.numberTestsTotal"""
         def testFailures = getTestFailures()
-        failuresToReturn += """Apex test failures
+        failuresToReturn += """Failures
                             
                             $testFailures
                             """

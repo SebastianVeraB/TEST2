@@ -1,7 +1,7 @@
 
 
 def blocks = []
-def deployCheckSubTitle = "Deploy Check"
+deployCheckSubTitle = "Deploy Check"
 jenkinsLogoURL = "https://user-images.githubusercontent.com/42625211/102991657-6dd22980-44f8-11eb-8bb6-b081a336253e.png"
 gitHubLogoURL = "https://user-images.githubusercontent.com/42625211/102992734-893e3400-44fa-11eb-8884-b7c983348fa7.png"
 pullRequestURL = pullRequest.url

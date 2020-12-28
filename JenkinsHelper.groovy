@@ -135,7 +135,7 @@ def getComponentFailures(){
             componentFailure ->
             count ++
             failureComponentsToReturn += count + "-\n"
-            failureComponentsToReturn += """$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t“ $componentFailure.problem ”\n"""
+            failureComponentsToReturn += """$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t“$componentFailure.problem”\n"""
             failureComponentsToReturn += fillWith("─")
     }
     return failureComponentsToReturn
@@ -148,7 +148,7 @@ def hasComponentFailures(){
 def fillWith(token) {
 
     def devider = "" 
-    for (i = 0; i < 80; i++) {
+    for (i = 0; i < 40; i++) {
         devider += token
     }
     return devider

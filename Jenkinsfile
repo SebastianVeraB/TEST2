@@ -78,7 +78,6 @@ pipeline {
                                     pullRequest.removeLabel(env.Deployable)
                                 }
                                 sh 'rm output.txt'
-                                sh 'rm ${outcome.detailLog}'
                              
                              }
                         }else {

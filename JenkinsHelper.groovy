@@ -14,7 +14,7 @@ class sfdxOutcome{
 def getSFDXOutcome() {
 
     def output = readFile('output.txt').trim()
-    println output
+    //println output
     SFDXResponse = readJSON text: output
 
     def retrievedCoverageWarnings =  retrieveCoverageWarnings()
@@ -43,6 +43,7 @@ def getSFDXOutcome() {
         details += retrieveComponentFailures()
     }
     def detail = summary + details
+    println detail
     sh (script: 'echo ${detail} > detailLog.txt')
     return new sfdxOutcome(resolution: aResolution, detailLog: 'detailLog.txt')
    
@@ -131,7 +132,6 @@ def retrieveComponentFailures(){
         aResolution = "component fail"
         echo "there are component with failures"
         def componentsFailed = getComponentFailures()
-        println componentsFailed
         failuresToReturn += """Components failed
 
                                 $componentsFailed 

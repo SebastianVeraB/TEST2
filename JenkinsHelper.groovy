@@ -20,9 +20,7 @@ def getSFDXOutcome() {
     def retrievedCoverageWarnings =  retrieveCoverageWarnings()
     def retrievedTestFailures = retrieveTestFailures()
     
-
-    
-    def details ="""SUMARY
+    def details ="""⛈ SUMARY
     $retrievedCoverageWarnings"""
 
     if(retrievedTestFailures) {
@@ -121,36 +119,41 @@ def retrieveComponentFailures(){
     if(hasComponentFailures()) {
         aResolution = "component fail"
         echo "there are component with failures"
+        failuresToReturn = fillWith("▁")
         failuresToReturn += """
-        * Components with errors:  $SFDXResponse.result.numberComponentErrors
-        * Components in total: $SFDXResponse.result.numberComponentsTotal """
+    • Components with errors:\t $SFDXResponse.result.numberComponentErrors
+    • Components in total:\t $SFDXResponse.result.numberComponentsTotal 
+    """ + fillWith("▔")
         def componentsFailed = getComponentFailures()
-        failuresToReturn += """================================================
-        Failures
-
-    $componentsFailed 
-                            """
+        failuresToReturn += """Failures \n$componentsFailed"""
     }
     return failuresToReturn
 }
 
 def getComponentFailures(){
     def failureComponentsToReturn = """"""
+    def count = 0
     SFDXResponse.result.details.componentFailures.each {
             componentFailure ->
-            failureComponentsToReturn += """* $componentFailure.fullName    |    $componentFailure.componentType
-                                            
-                                                
-                                                + Type: $componentFailure.problemType
-
-                                                + Description: $componentFailure.problem
-                                            """
+            count ++
+            failureComponentsToReturn += count + "-"
+            failureComponentsToReturn += """$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t“$componentFailure.problem”\n"""
+            failureComponentsToReturn += fillWith("─")
     }
     return failureComponentsToReturn
 }
 
 def hasComponentFailures(){
     return SFDXResponse.result.details.containsKey('componentFailures')
+}
+
+def fillWith(token) {
+
+    def devider = "" 
+    for (i = 0; i < 20; i++) {
+        devider += token
+    }
+    return devider
 }
 
 return this

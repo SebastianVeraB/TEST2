@@ -1,7 +1,7 @@
 
 
 def blocks = []
-def deployCheckSubTitle = "A new event at GitHub triggered Calypso Jenkins Automation Deploy Check pipeline"
+def deployCheckSubTitle = "Deploy Check"
 jenkinsLogoURL = "https://user-images.githubusercontent.com/42625211/102991657-6dd22980-44f8-11eb-8bb6-b081a336253e.png"
 gitHubLogoURL = "https://user-images.githubusercontent.com/42625211/102992734-893e3400-44fa-11eb-8884-b7c983348fa7.png"
 pullRequestURL = "test pull url"
@@ -26,6 +26,7 @@ def buildMessage(){
             addApexFailResolution()
         break
     }
+    addClosure()
     return blocks
 }
 
@@ -35,14 +36,63 @@ def buildCoreMessage() {
                     [   
                         "type": "section",
                         "text": [   
-                                    "type": "plain_text",
-                                    "text": "$currentSubTitle",
-                                    "emoji": true 
+                                    "type": "mrkdwn",
+                                    "text": "Calypso Automation | *Check runs*"
                                 ] 
                     ],
                     [
                         "type": "context",
                         "elements": [
+                                        [
+                                            "type": "mrkdwn",
+					                        "text": ":avatar: \t $userName \n :pr-icon: \t $pRName \n :check-ls: \t $deployCheckSubTitle"
+                                        ]
+                                    ]
+                    ],
+                     [
+                        "type": "header",
+                        "text": [
+                                    "type": "plain_text",
+                                    "text": "Status",
+                                    "emoji": true
+                                ]
+                    ],
+                   
+                ]
+}
+
+/*
+                                      */
+
+def setResolution(aResolution) {
+    resolution = aResolution
+}
+
+def addSuccessResolution() {
+
+    blocks.addAll(  [
+                    [
+                        "type": "context",
+                        "elements": [
+                                        [
+                                            "type": "mrkdwn",
+                                            "text": ":white_check_mark:  _Success_"
+                                        ]
+                                    ]
+                    ]
+                    
+                ]
+    )
+}
+
+def addClosure() {
+    blocks.addAll(  [
+                        [
+                        "type": "divider"
+                        ],
+                        [
+                            "type": "context",
+                            "elements":[
                                         [
                                             "type": "image",
                                             "image_url": "$jenkinsLogoURL",
@@ -62,49 +112,18 @@ def buildCoreMessage() {
                                             "text": "<$pullRequestURL|Pull Request>"
                                         ]
                                     ]
-                    ],
-                    [
-                        "type": "divider"
-                    ],
-                    [
-                        "type": "header",
-                        "text": [
-                                    "type": "plain_text",
-                                    "text": "Overview",
-                                    "emoji": true
-                                ]
-                    ],
-                    [
-                        "type": "section",
-                        "text": [
-                                    "type": "mrkdwn",
-                                    "text": "⎼⎼ _Pull Request details_ ⎼⎼\n \n\t•\t*Author*  \t\t$userName\n \t•\t*PR Name*\t\t\t$pRName \n \n ⎼⎼ _Status Check_ ⎼⎼"
-                                ]
+                        ],
+                        [
+                            "type": "header",
+                            "text": [
+                                "type": "plain_text",
+                                "text": "Detail Log",
+                                "emoji": true
+                            ]
+                        ]
                     ]
-                ]
-}
 
-def setResolution(aResolution) {
-    resolution = aResolution
-}
-
-def addSuccessResolution() {
-
-    blocks.addAll(  [
-                    [
-                        "type": "context",
-                        "elements": [
-                                        [
-                                            "type": "mrkdwn",
-                                            "text": ":white_check_mark:  _Success_"
-                                        ]
-                                    ]
-                    ],
-                    [
-                        "type": "divider"
-                    ]
-                ]
-    )
+                )
 }
 
 def addFailComponentRessolution() {
@@ -117,17 +136,6 @@ def addFailComponentRessolution() {
                                             "text": ":warning:   _Fail_\t *Errors found on Metadata components*"
                                         ]
                                     ]
-                    ],
-                    [
-                        "type": "divider"
-                    ],
-                    [
-                        "type": "header",
-                        "text": [
-                                    "type": "plain_text",
-                                    "text": "Detail Log",
-                                    "emoji": true
-                                ]
                     ]
                 ])
 }
@@ -142,17 +150,6 @@ def addApexFailResolution() {
                                             "text": ":warning:   _Fail_\t *Apex test run failed*"
                                         ]
                                     ]
-                    ],
-                    [
-                        "type": "divider"
-                    ],
-                    [
-                        "type": "header",
-                        "text": [
-                                    "type": "plain_text",
-                                    "text": "Detail Log",
-                                    "emoji": true
-                                ]
                     ]
                 ])
 

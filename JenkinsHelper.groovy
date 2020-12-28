@@ -134,8 +134,8 @@ def getComponentFailures(){
     SFDXResponse.result.details.componentFailures.each {
             componentFailure ->
             count ++
-            failureComponentsToReturn += count + "-\n"
-            failureComponentsToReturn += """$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t“$componentFailure.problem”\n"""
+            failureComponentsToReturn += "\n"+ count + "-\n"
+            failureComponentsToReturn += """$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t“ \b$componentFailure.problem \b”\n"""
             failureComponentsToReturn += fillWith("─")
     }
     return failureComponentsToReturn

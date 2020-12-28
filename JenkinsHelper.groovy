@@ -43,8 +43,8 @@ def getSFDXOutcome() {
         details += retrieveComponentFailures()
     }
     def detail = summary + details
-    println detail
-    sh (script: 'echo ${detail} > detailLog.txt')
+    println "detail is: " + detail
+    sh (script: "echo ${detail} > detailLog.txt")
     return new sfdxOutcome(resolution: aResolution, detailLog: 'detailLog.txt')
    
 }

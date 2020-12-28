@@ -135,7 +135,7 @@ def getComponentFailures(){
             componentFailure ->
             count ++
             failureComponentsToReturn += count + "-\n"
-            failureComponentsToReturn += """$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t\“$componentFailure.problem\”\n"""
+            failureComponentsToReturn += """$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t“ $componentFailure.problem ”\n"""
             failureComponentsToReturn += fillWith("─")
     }
     return failureComponentsToReturn

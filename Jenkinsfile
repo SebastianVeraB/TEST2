@@ -69,9 +69,8 @@ pipeline {
                                 def outcome = bot.getSFDXOutcome()
                                 slackBuilder.setResolution(outcome.resolution)
                                 slackSend(blocks: slackBuilder.buildMessage())
-                                def detailLog = new File("detailLog.txt")
-                                detailLog.write(outcome.detailLog)
-                                slackUploadFile("detailLog.txt")
+                               
+                                slackUploadFile(outcome.detailLog)
                                // publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: outcome[0], title: 'Fail', text: outcome[1]
                                 pullRequest.addLabel(env.NotDeployable)
                                 
@@ -79,6 +78,7 @@ pipeline {
                                     pullRequest.removeLabel(env.Deployable)
                                 }
                                 sh 'rm output.txt'
+                                sh 'rm ${outcome.detailLog}'
                              
                              }
                         }else {

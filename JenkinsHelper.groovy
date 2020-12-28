@@ -114,18 +114,16 @@ def retrieveTestFailures(){
 
 def retrieveComponentFailures(){
 
-    def failuresToReturn = """"""
+    def failuresToReturn
 
     if(hasComponentFailures()) {
         aResolution = "component fail"
         echo "there are component with failures"
         failuresToReturn = fillWith("▁")
-        failuresToReturn += """
-    • Components with errors:\t $SFDXResponse.result.numberComponentErrors
-    • Components in total:\t $SFDXResponse.result.numberComponentsTotal 
+        failuresToReturn += """\n\n• Components with errors:\t $SFDXResponse.result.numberComponentErrors\n• Components in total:\t $SFDXResponse.result.numberComponentsTotal\n
     """ + fillWith("▔")
         def componentsFailed = getComponentFailures()
-        failuresToReturn += """Failures \n$componentsFailed"""
+        failuresToReturn += """\nFailures \n$componentsFailed"""
     }
     return failuresToReturn
 }
@@ -136,8 +134,8 @@ def getComponentFailures(){
     SFDXResponse.result.details.componentFailures.each {
             componentFailure ->
             count ++
-            failureComponentsToReturn += count + "-"
-            failureComponentsToReturn += """$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t“$componentFailure.problem”\n"""
+            failureComponentsToReturn += count + "-\n"
+            failureComponentsToReturn += """$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t\“$componentFailure.problem\”\n"""
             failureComponentsToReturn += fillWith("─")
     }
     return failureComponentsToReturn
@@ -150,7 +148,7 @@ def hasComponentFailures(){
 def fillWith(token) {
 
     def devider = "" 
-    for (i = 0; i < 20; i++) {
+    for (i = 0; i < 80; i++) {
         devider += token
     }
     return devider

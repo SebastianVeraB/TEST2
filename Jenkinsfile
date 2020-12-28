@@ -86,8 +86,8 @@ echo "Authentication failed"
                         
                         println pullRequest.mergeable
                         
-                    
-                }
+                        }
+                }}
             }
         }
         

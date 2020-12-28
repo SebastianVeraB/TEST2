@@ -20,8 +20,7 @@ def getSFDXOutcome() {
     def retrievedCoverageWarnings =  retrieveCoverageWarnings()
     def retrievedTestFailures = retrieveTestFailures()
     
-    def details ="""⛈ SUMARY
-    $retrievedCoverageWarnings"""
+    def details ="""⛈ SUMARY\n$retrievedCoverageWarnings"""
 
     if(retrievedTestFailures) {
         details += retrievedTestFailures
@@ -97,18 +96,14 @@ def getTestFailures() {
 
 def retrieveTestFailures(){
     
-    def failuresToReturn = """"""
+    def failuresToReturn
 
     if( hasTestFailures() ) {
         aResolution = "apex fail"
-        failuresToReturn += """
-                        * Failed test: $SFDXResponse.result.numberTestErrors 
-                        * Test total: $SFDXResponse.result.numberTestsTotal"""
+        failuresToReturn = fillWith("▁")
+        failuresToReturn += """\n\n• Failed test:\t$SFDXResponse.result.numberTestErrors\n• Test total: $SFDXResponse.result.numberTestsTotal"""
         def testFailures = getTestFailures()
-        failuresToReturn += """Failures
-                            
-                            $testFailures
-                            """
+        failuresToReturn += """\nFailures\n$testFailures"""
     }  
 }
 
@@ -120,8 +115,7 @@ def retrieveComponentFailures(){
         aResolution = "component fail"
         echo "there are component with failures"
         failuresToReturn = fillWith("▁")
-        failuresToReturn += """\n\n• Components with errors:\t $SFDXResponse.result.numberComponentErrors\n• Components in total:\t $SFDXResponse.result.numberComponentsTotal\n
-    """ + fillWith("▔")
+        failuresToReturn += """\n\n• Components with errors:\t $SFDXResponse.result.numberComponentErrors\n• Components in total:\t $SFDXResponse.result.numberComponentsTotal\n""" + fillWith("▔")
         def componentsFailed = getComponentFailures()
         failuresToReturn += """\nFailures \n$componentsFailed"""
     }

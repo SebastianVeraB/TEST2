@@ -4,10 +4,10 @@ def blocks = []
 def deployCheckSubTitle = "Deploy Check"
 jenkinsLogoURL = "https://user-images.githubusercontent.com/42625211/102991657-6dd22980-44f8-11eb-8bb6-b081a336253e.png"
 gitHubLogoURL = "https://user-images.githubusercontent.com/42625211/102992734-893e3400-44fa-11eb-8884-b7c983348fa7.png"
-pullRequestURL = "test pull url"
-jobURL = "test job url"
-userName = "test Name url"
-pRName = "test pr name"
+pullRequestURL = pullRequest.url
+jobURL = env.JOB_URL
+userName = pullRequest.createdBy
+pRName = pullRequest.title
 def resolution
 
 currentSubTitle = deployCheckSubTitle

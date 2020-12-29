@@ -26,7 +26,7 @@ def getSFDXOutcome() {
     if(retrievedTestFailures) {
         details += retrievedTestFailures
     }
-    else if(retrieveComponentFailures) {
+    else if(retrievedComponentFailures) {
         details += retrievedComponentFailures
     }
     else if(retrievedCoverageWarnings) {

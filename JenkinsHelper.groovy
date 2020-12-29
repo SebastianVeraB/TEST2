@@ -34,18 +34,16 @@ def getSFDXOutcome() {
 }
 
 def  retrieveCoverageWarnings() {
-    def coverageToReturn = """"""
+    def coverageToReturn = fillWith("▁")
 
         if( hasCoverageWarnigns() ) {
             coverageToReturn+=   """Code coverage warnings"""
             if( hasMultipleCoverageWarnings() ) {
                 def coverageList =  getCoverageWarnings()  
-                coverageToReturn+=   """
-                                        $coverageList 
+                coverageToReturn+=   """\n\t$coverageList 
                                         """
             }else {
-                coverageToReturn+= """
-                                        * $SFDXResponse.result.details.runTestResult.codeCoverageWarnings.message</li>
+                coverageToReturn+= """\n\n\tⓘ $SFDXResponse.result.details.runTestResult.codeCoverageWarnings.message
                                     """
             }
         } 
@@ -58,10 +56,10 @@ def getCoverageWarnings() {
                             warning ->
                                                
                                 if(warning.name in String) {
-                                        returnString += """* $warning.name: $warning.message """
+                                        returnString += """\n\n\tⓘ $warning.name: $warning.message """
                                 }
                                 else {
-                                        returnString += """* $warning.message """
+                                        returnString += """\n\n\tⓘ $warning.message """
                                 }
     }
     return returnString

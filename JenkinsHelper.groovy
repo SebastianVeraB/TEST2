@@ -21,7 +21,7 @@ def getSFDXOutcome() {
     def retrievedTestFailures = retrieveTestFailures()
     def retrievedComponentFailures = retrieveComponentFailures()
 
-    def details ="""⛈ SUMARY"""
+    def details ="""⛈ SUMARY\n"""
 
     if(retrievedTestFailures) {
         details += retrievedTestFailures

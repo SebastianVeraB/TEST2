@@ -19,14 +19,18 @@ def getSFDXOutcome() {
 
     def retrievedCoverageWarnings =  retrieveCoverageWarnings()
     def retrievedTestFailures = retrieveTestFailures()
-    
-    def details ="""⛈ SUMARY\n$retrievedCoverageWarnings"""
+    def retrievedComponentFailures = retrieveComponentFailures()
+
+    def details ="""⛈ SUMARY"""
 
     if(retrievedTestFailures) {
         details += retrievedTestFailures
     }
-    else {
-        details += retrieveComponentFailures()
+    else if(retrieveComponentFailures) {
+        details += retrievedComponentFailures
+    }
+    else if(retrievedCoverageWarnings) {
+         details += retrievedCoverageWarnings
     }
     writeFile file: 'detailLog.txt', text: details
     return new sfdxOutcome(resolution: aResolution, detailLog: 'detailLog.txt')
@@ -37,7 +41,7 @@ def  retrieveCoverageWarnings() {
     def coverageToReturn = fillWith("▁")
 
         if( hasCoverageWarnigns() ) {
-            coverageToReturn+=   """Code coverage warnings"""
+            coverageToReturn+=   """\nCode coverage warnings"""
             if( hasMultipleCoverageWarnings() ) {
                 def coverageList =  getCoverageWarnings()  
                 coverageToReturn+=   """\n\t$coverageList 

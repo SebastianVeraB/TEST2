@@ -83,10 +83,7 @@ def getTestFailures() {
     SFDXResponse.result.details.runTestResult.failures.each { 
         failure ->
             if(failure != null) {
-                failuresToReturn += """ * Class: $failure.name 
-                                        * Method: $failure.methodName
-                                        * Error message: $failure.message 
-                                        * Stacktrace: $failure.stackTrace"""
+                failuresToReturn += """• Class: $failure.name\n• Method: $failure.methodName\n• Error message: $failure.message\n• Stacktrace: $failure.stackTrace"""
             }
     }
     return failuresToReturn

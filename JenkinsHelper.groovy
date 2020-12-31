@@ -39,7 +39,7 @@ def getSFDXOutcome() {
          details += retrievedCoverageWarnings
     }
     writeFile file: 'detailLog.md', text: details
-    return new sfdxOutcome(resolution: aResolution, detailLog: 'detailLog.txt')
+    return new sfdxOutcome(resolution: aResolution, detailLog: 'detailLog.md')
    
 }
 

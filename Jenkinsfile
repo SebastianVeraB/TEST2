@@ -69,8 +69,12 @@ pipeline {
                                 def outcome = bot.getSFDXOutcome()
                                 slackBuilder.setResolution(outcome.resolution)
                                 slackSend(blocks: slackBuilder.buildMessage())
-                               
-                                slackUploadFile(outcome.detailLog)
+
+                                nodejs('markdown2pdf') {
+                                     sh "markdown-pdf $outcome.detailLog -s myTest.css -b 0 -o detailLog.pdf"
+                                }
+
+                                slackUploadFile('detailLog.pdf')
                                // publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: outcome[0], title: 'Fail', text: outcome[1]
                                 pullRequest.addLabel(env.NotDeployable)
                                 
@@ -81,7 +85,7 @@ pipeline {
                              
                              }
                         }else {
-echo "Authentication failed"
+                                echo "Authentication failed"
                            
                         
                         println pullRequest.mergeable

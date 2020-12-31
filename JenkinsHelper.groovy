@@ -21,7 +21,8 @@ def getSFDXOutcome() {
     def retrievedTestFailures = retrieveTestFailures()
     def retrievedComponentFailures = retrieveComponentFailures()
 
-    def details ="""⛈ SUMARY\n"""
+    def details ="""![logo3](https://user-images.githubusercontent.com/42625211/103368966-b7e27e80-4aa7-11eb-8b00-4fb86de8d174.png)
+    &nbsp;\n# Summary"""
 
     if(retrievedTestFailures) {
         details += retrievedTestFailures
@@ -32,22 +33,22 @@ def getSFDXOutcome() {
     else if(retrievedCoverageWarnings) {
          details += retrievedCoverageWarnings
     }
-    writeFile file: 'detailLog.txt', text: details
+    writeFile file: 'detailLog.md', text: details
     return new sfdxOutcome(resolution: aResolution, detailLog: 'detailLog.txt')
    
 }
 
 def  retrieveCoverageWarnings() {
-    def coverageToReturn = fillWith("▁")
+    def coverageToReturn = ''
 
         if( hasCoverageWarnigns() ) {
-            coverageToReturn+=   """\nCode coverage warnings"""
+            coverageToReturn+=   """\n## Code coverage failure"""
             if( hasMultipleCoverageWarnings() ) {
                 def coverageList =  getCoverageWarnings()  
                 coverageToReturn+=   """\n\t$coverageList 
                                         """
             }else {
-                coverageToReturn+= """\n\n\tⓘ $SFDXResponse.result.details.runTestResult.codeCoverageWarnings.message
+                coverageToReturn+= """\n###### ⓘ  Warning\n> $SFDXResponse.result.details.runTestResult.codeCoverageWarnings.message
                                     """
             }
         } 
@@ -60,10 +61,10 @@ def getCoverageWarnings() {
                             warning ->
                                                
                                 if(warning.name in String) {
-                                        returnString += """\n\n\tⓘ $warning.name: $warning.message """
+                                        returnString += """\n###### ⓘ  Warning\n>  $warning.name: $warning.message """
                                 }
                                 else {
-                                        returnString += """\n\n\tⓘ $warning.message """
+                                        returnString += """\n###### ⓘ  Warning\n> $warning.message """
                                 }
     }
     return returnString
@@ -83,11 +84,14 @@ def hasTestFailures() {
 
 
 def getTestFailures() {
+    def count = 0
     def failuresToReturn = """"""
     SFDXResponse.result.details.runTestResult.failures.each { 
         failure ->
             if(failure != null) {
-                failuresToReturn += """• Class: $failure.name\n• Method: $failure.methodName\n• Error message: $failure.message\n• Stacktrace: $failure.stackTrace"""
+                count ++
+                failuresToReturn += "\n"+ count + "."
+                failuresToReturn += """**$failure.name** ⇨  $failure.methodName\n ###### ⓘ  Error Message\n> $failure.message\n###### ⓘ   Stacktrace\n> $failure.stackTrace"""
             }
     }
     return failuresToReturn
@@ -99,10 +103,9 @@ def retrieveTestFailures(){
 
     if( hasTestFailures() ) {
         aResolution = "apex fail"
-        failuresToReturn = fillWith("▁")
-        failuresToReturn += """\n\n• Failed test:\t$SFDXResponse.result.numberTestErrors\n• Test total: $SFDXResponse.result.numberTestsTotal"""
+        failuresToReturn += """\n* Failed test:\t$SFDXResponse.result.numberTestErrors\n* Total tests: $SFDXResponse.result.numberTestsTotal\n&nbsp;\n---"""
         def testFailures = getTestFailures()
-        failuresToReturn += """\nFailures\n$testFailures"""
+        failuresToReturn += """\n## Failures\n##### *Class Name ⇨ Method Name\n$testFailures"""
     }  
 }
 
@@ -113,10 +116,9 @@ def retrieveComponentFailures(){
     if(hasComponentFailures()) {
         aResolution = "component fail"
         echo "there are component with failures"
-        failuresToReturn = fillWith("▁")
-        failuresToReturn += """\n\n• Components with errors:\t $SFDXResponse.result.numberComponentErrors\n• Components in total:\t $SFDXResponse.result.numberComponentsTotal\n""" + fillWith("▔")
+        failuresToReturn += """\n* Components with errors:\t $SFDXResponse.result.numberComponentErrors\n* Components in total:\t $SFDXResponse.result.numberComponentsTotal\n&nbsp;\n---"""
         def componentsFailed = getComponentFailures()
-        failuresToReturn += """\nFailures \n$componentsFailed"""
+        failuresToReturn += """\n## Failures\n##### *Component Type ⇨ Component Name\n$componentsFailed"""
     }
     return failuresToReturn
 }
@@ -128,9 +130,9 @@ def getComponentFailures(){
     SFDXResponse.result.details.componentFailures.each {
             componentFailure ->
             count ++
-            failureComponentsToReturn += "\n"+ count + "-\n"
-            failureComponentsToReturn += "$componentFailure.componentType / $componentFailure.fullName \n\n\t ⓘ $componentFailure.problemType\n\t“"+"$componentFailure.problem"+"”\n"
-            failureComponentsToReturn += fillWith("─")
+            failureComponentsToReturn += "\n"+ count + "."
+            failureComponentsToReturn += "**$componentFailure.componentType** ⇨ $componentFailure.fullName \n###### ⓘ  $componentFailure.problemType\n> $componentFailure.problem"
+            
     }
     return failureComponentsToReturn
 }
@@ -139,13 +141,5 @@ def hasComponentFailures(){
     return SFDXResponse.result.details.containsKey('componentFailures')
 }
 
-def fillWith(token) {
-
-    def devider = "" 
-    for (i = 0; i < 40; i++) {
-        devider += token
-    }
-    return devider
-}
 
 return this

@@ -21,8 +21,13 @@ def getSFDXOutcome() {
     def retrievedTestFailures = retrieveTestFailures()
     def retrievedComponentFailures = retrieveComponentFailures()
 
+    Date date = new Date()
+    String datePart = date.format("MM/dd/yyyy")
+    String timePart = date.format("HH:mm:ss")
+
     def details ="""![logo3](https://user-images.githubusercontent.com/42625211/103368966-b7e27e80-4aa7-11eb-8b00-4fb86de8d174.png)
-    &nbsp;\n# Summary"""
+    &nbsp;\n# Summary\n##### ☁ QAMerge | $datePart $timePart"""
+
 
     if(retrievedTestFailures) {
         details += retrievedTestFailures

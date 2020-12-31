@@ -57,7 +57,7 @@
   
   pre,
   code {
-    font-family: 'Audiowide', cursive;
+    font-family: 'Montserrat', sans-serif;
   }
   
   pre {
@@ -106,8 +106,8 @@
   
   p,
   .modest-p {
-    font-size: 1rem;
-    margin-bottom: 1.3rem;
+    font-size: .8rem;
+    font-weight: 300;
   }
   
   h1,
@@ -145,12 +145,12 @@
   
   h5,
   .modest-h5 {
-    font-size: .65rem;
+    font-size: .8rem;
   }
   
   h6,
   .modest-h6 {
-    font-size: .88rem;
+    font-size: .8rem;
   }
   
   small,
@@ -173,11 +173,9 @@
   
   
   html {
-    font-size: 14px;
     max-width: 100%;
     background-color: black !important;
-
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
   
   body {
@@ -186,7 +184,7 @@
     margin: 0 auto;
     max-width: 48rem;
     line-height: 1.45;
-    padding: .25rem;
+    padding: 2rem;
     page-break-after: always;
   }
   
@@ -195,16 +193,15 @@
   h3,
   h4,
   h5{
-    font-family:  'Open Sans Condensed', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
   strong {
-    font-family:  'Open Sans Condensed', sans-serif;
-    font-weight: 700;
+    font-weight: bold;
   }
   
   h1{
     border-bottom: 1px solid #fafafa;
-    margin-bottom: 3.15rem;
+    margin-bottom: 3rem;
     padding-bottom: .5rem;
     text-align: center;
   }
@@ -215,15 +212,16 @@
     text-shadow: 1px 1px 2px #9e1212;
   }
   h6 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin-bottom: -1rem;
     text-indent: 4.2rem;
-    background-color: lightgray;
+    font-weight: 600;
     color: rgb(207, 206, 123) !important;
   }
   h5 {
     margin: 0;
     color: rgb(116, 116, 116);
+    font-weight: 600;
   }
   h2 + h5{
     margin-top: -3.8rem;
@@ -243,8 +241,9 @@
   
   blockquote {
     border-left: 8px solid rgb(207, 206, 123) !important;
-    padding: 0.5rem;
+     padding-left: 0.5rem;
     box-shadow: 1px 1px 2px #4b4b4b;
+
+    border-radius: 5px;
   }
-  
-  
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,700;1,500&display=swap');

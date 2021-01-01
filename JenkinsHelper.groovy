@@ -151,7 +151,7 @@ def hasComponentFailures(){
 def retrieveCompletedDate() {
     def patern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     def input = SFDXResponse.result.completedDate
-    def aDate = Date.parse(patern, input)
+    def aDate = SimpleDateFormat(patern).parse(input)
     String datePart = aDate.format("MM/dd/yyyy")
     String timePart = aDate.format("HH:mm:ss")
     return datePart + " " + timePart

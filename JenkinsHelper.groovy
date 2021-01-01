@@ -21,23 +21,21 @@ def getSFDXOutcome() {
     def retrievedTestFailures = retrieveTestFailures()
     def retrievedComponentFailures = retrieveComponentFailures()
 
-    Date date = new Date()
-    String datePart = date.format("MM/dd/yyyy")
-    String timePart = date.format("HH:mm:ss")
+    def date = retrieveCompletedDate()
 
     def details ="""![logo3](https://user-images.githubusercontent.com/42625211/103368966-b7e27e80-4aa7-11eb-8b00-4fb86de8d174.png)
-    &nbsp;\n# Summary\n##### ☁ QAMerge | $datePart $timePart"""
+    &nbsp;\n# Summary\n##### ☁ QAMerge | $date"""
 
-
+    if(retrievedCoverageWarnings) {
+         details += retrievedCoverageWarnings
+    }
     if(retrievedTestFailures) {
         details += retrievedTestFailures
     }
     else if(retrievedComponentFailures) {
         details += retrievedComponentFailures
     }
-    else if(retrievedCoverageWarnings) {
-         details += retrievedCoverageWarnings
-    }
+   
     writeFile file: 'detailLog.md', text: details
     return new sfdxOutcome(resolution: aResolution, detailLog: 'detailLog.md')
    
@@ -47,6 +45,7 @@ def  retrieveCoverageWarnings() {
     def coverageToReturn = ''
 
         if( hasCoverageWarnigns() ) {
+            aResolution = "apex fail"
             coverageToReturn+=   """\n## Code coverage failure"""
             if( hasMultipleCoverageWarnings() ) {
                 def coverageList =  getCoverageWarnings()  
@@ -99,6 +98,8 @@ def getTestFailures() {
                 failuresToReturn += """**$failure.name** ⇨  $failure.methodName\n ###### ⓘ  Error Message\n> $failure.message\n###### ⓘ   Stacktrace\n> $failure.stackTrace"""
             }
     }
+    echo "printing apex failures"
+    println failuresToReturn
     return failuresToReturn
 }
 
@@ -107,6 +108,7 @@ def retrieveTestFailures(){
     def failuresToReturn
 
     if( hasTestFailures() ) {
+        echo "has test failures"
         aResolution = "apex fail"
         failuresToReturn += """\n* Failed test:\t$SFDXResponse.result.numberTestErrors\n* Total tests: $SFDXResponse.result.numberTestsTotal\n&nbsp;\n---"""
         def testFailures = getTestFailures()
@@ -146,5 +148,13 @@ def hasComponentFailures(){
     return SFDXResponse.result.details.containsKey('componentFailures')
 }
 
+def retrieveCompletedDate() {
+    def patern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    def input = SFDXResponse.result.completedDate
+    def aDate = Date.parse(patern, input)
+    String datePart = aDate.format("MM/dd/yyyy")
+    String timePart = aDate.format("HH:mm:ss")
+    return datePart + " " + timePart
+}
 
 return this

@@ -208,8 +208,9 @@
   h2{
     margin-bottom: 3.15rem;
     padding-bottom: .5rem;
-    color: rgb(241, 184, 184) !important;
+    color: rgb(216, 111, 111) !important;
     text-shadow: 1px 1px 2px #9e1212;
+    font-weight: 700;
   }
   h6 {
     font-family: 'Montserrat', sans-serif;

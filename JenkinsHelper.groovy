@@ -26,14 +26,15 @@ def getSFDXOutcome() {
     def details ="""![logo3](https://user-images.githubusercontent.com/42625211/103368966-b7e27e80-4aa7-11eb-8b00-4fb86de8d174.png)
     &nbsp;\n# Summary\n##### ☁ QAMerge | $date"""
 
-    if(retrievedCoverageWarnings) {
-         details += retrievedCoverageWarnings
-    }
+   
     if(retrievedTestFailures) {
         details += retrievedTestFailures
     }
     else if(retrievedComponentFailures) {
         details += retrievedComponentFailures
+    }
+     if(retrievedCoverageWarnings) {
+         details += retrievedCoverageWarnings
     }
    
     writeFile file: 'detailLog.md', text: details
@@ -112,7 +113,7 @@ def retrieveTestFailures(){
         aResolution = "apex fail"
         failuresToReturn += """\n* Failed test:\t$SFDXResponse.result.numberTestErrors\n* Total tests: $SFDXResponse.result.numberTestsTotal\n&nbsp;\n---"""
         def testFailures = getTestFailures()
-        failuresToReturn += """\n## Failures\n##### *Class Name ⇨ Method Name\n$testFailures"""
+        failuresToReturn += """\n## Apex run Failures\n##### *Class Name ⇨ Method Name\n$testFailures"""
     }  
     return failuresToReturn
 }
@@ -126,7 +127,7 @@ def retrieveComponentFailures(){
         echo "there are component with failures"
         failuresToReturn += """\n* Components with errors:\t $SFDXResponse.result.numberComponentErrors\n* Components in total:\t $SFDXResponse.result.numberComponentsTotal\n&nbsp;\n---"""
         def componentsFailed = getComponentFailures()
-        failuresToReturn += """\n## Failures\n##### *Component Type ⇨ Component Name\n$componentsFailed"""
+        failuresToReturn += """\n## Component Failures\n##### *Component Type ⇨ Component Name\n$componentsFailed"""
     }
     return failuresToReturn
 }

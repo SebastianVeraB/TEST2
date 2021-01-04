@@ -56,7 +56,7 @@ pipeline {
                                 publishChecks name: 'Deploy check', title: 'Success '
                                 pullRequest.addLabel(env.Deployable)
                                 slackBuilder.setResolution("success")
-                                slackSend(blocks: slackBuilder.buildMessage())
+                                def slackResponse = slackSend(blocks: slackBuilder.buildMessage())
                               
                                 if (pullRequest.labels.contains(env.NotDeployable)) {
                                     pullRequest.removeLabel(env.NotDeployable)
@@ -71,7 +71,7 @@ pipeline {
                                      sh "markdown-pdf $outcome.detailLog -s myTest.css -b 0 -o detailLog.pdf"
                                 }
 
-                                slackUploadFile('detailLog.pdf')
+                                slackUploadFile(channel: slackResponse.threadId, filePath: 'detailLog.pdf')
                                // publishChecks conclusion: 'FAILURE', name: 'Deploy check', summary: outcome[0], title: 'Fail', text: outcome[1]
                                 pullRequest.addLabel(env.NotDeployable)
                                 

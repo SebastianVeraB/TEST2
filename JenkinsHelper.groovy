@@ -134,7 +134,7 @@ def retrieveComponentFailures(){
 def getComponentFailures(){
     def failureComponentsToReturn = """"""
     def count = 0
-    SFDXResponse.result.details.componentFailures.each {
+    .details.componentFailures.each {
             componentFailure ->
             count ++
             failureComponentsToReturn += "\n"+ count + "."
@@ -149,12 +149,14 @@ def hasComponentFailures(){
 }
 
 def retrieveCompletedDate() {
-    def patern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    def input = SFDXResponse.result.completedDate
-    def aDate = SimpleDateFormat(patern).parse(input)
-    String datePart = aDate.format("MM/dd/yyyy")
-    String timePart = aDate.format("HH:mm:ss")
-    return datePart + " " + timePart
+    String completedDateTime = SFDXResponse.result.completedDate
+    
+    String completedDate = completedDateTime.dropRight( 14 )
+    completedDate = completedDate.drop( 5 ) + '-' + completedDate.dropRight( 6 ) 
+
+    String completedTime = completedDateTime.drop( 11 ).dropRight( 5 )
+   
+    return completedDate + " " + completedTime
 }
 
 return this

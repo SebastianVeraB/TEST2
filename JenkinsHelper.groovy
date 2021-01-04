@@ -47,7 +47,7 @@ def  retrieveCoverageWarnings() {
 
         if( hasCoverageWarnigns() ) {
             aResolution = "apex fail"
-            coverageToReturn+=   """\n## Code coverage failure"""
+            coverageToReturn+=   """\n---\n## Code coverage failure"""
             if( hasMultipleCoverageWarnings() ) {
                 def coverageList =  getCoverageWarnings()  
                 coverageToReturn+=   """\n\t$coverageList 
@@ -139,7 +139,7 @@ def getComponentFailures(){
     .details.componentFailures.each {
             componentFailure ->
             count ++
-            failureComponentsToReturn += "\n"+ count + "."
+            failureComponentsToReturn += "\n"+ count + ". "
             failureComponentsToReturn += "**$componentFailure.componentType** ⇨ $componentFailure.fullName \n###### ⓘ  $componentFailure.problemType\n> $componentFailure.problem"
             
     }

@@ -65,7 +65,7 @@ pipeline {
                              echo "Fail deploy check"
                                 def outcome = bot.getSFDXOutcome()
                                 slackBuilder.setResolution(outcome.resolution)
-                                def slackResponse slackSend(blocks: slackBuilder.buildMessage())
+                                def slackResponse = slackSend(blocks: slackBuilder.buildMessage())
 
                                 nodejs('markdown2pdf') {
                                      sh "markdown-pdf $outcome.detailLog -s myTest.css -b 0 -o detailLog.pdf"

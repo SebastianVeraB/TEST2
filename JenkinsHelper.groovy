@@ -114,6 +114,7 @@ def retrieveTestFailures(){
         def testFailures = getTestFailures()
         failuresToReturn += """\n## Failures\n##### *Class Name ⇨ Method Name\n$testFailures"""
     }  
+    return failuresToReturn
 }
 
 def retrieveComponentFailures(){

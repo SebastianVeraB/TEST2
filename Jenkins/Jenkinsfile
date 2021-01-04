@@ -22,8 +22,8 @@ pipeline {
             steps {
                 script {
                     toolbelt =  tool 'toolbelt' 
-                    bot = load "JenkinsHelper.groovy"
-                    slackBuilder = load "JenkinsSlackHelper.groovy"
+                    bot = load "Jenkins/JenkinsHelper.groovy"
+                    slackBuilder = load "Jenkins/JenkinsSlackHelper.groovy"
                 }
             }
             
@@ -68,7 +68,7 @@ pipeline {
                                 def slackResponse = slackSend(blocks: slackBuilder.buildMessage())
 
                                 nodejs('markdown2pdf') {
-                                     sh "markdown-pdf $outcome.detailLog -s myTest.css -b 0 -o detailLog.pdf"
+                                     sh "markdown-pdf $outcome.detailLog -s Jenkins/myTest.css -b 0 -o detailLog.pdf"
                                 }
 
                                 slackUploadFile(channel: slackResponse.threadId, filePath: 'detailLog.pdf')

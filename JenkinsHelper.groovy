@@ -106,7 +106,7 @@ def getTestFailures() {
 
 def retrieveTestFailures(){
     
-    def failuresToReturn
+    def failuresToReturn = ''
 
     if( hasTestFailures() ) {
         echo "has test failures"
@@ -120,7 +120,7 @@ def retrieveTestFailures(){
 
 def retrieveComponentFailures(){
 
-    def failuresToReturn
+    def failuresToReturn = ''
 
     if(hasComponentFailures()) {
         aResolution = "component fail"

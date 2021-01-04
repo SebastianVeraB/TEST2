@@ -112,14 +112,6 @@ def addClosure() {
                                             "text": "<$pullRequestURL|Pull Request>"
                                         ]
                                     ]
-                        ],
-                        [
-                            "type": "header",
-                            "text": [
-                                "type": "plain_text",
-                                "text": "Detail Log",
-                                "emoji": true
-                            ]
                         ]
                     ]
 

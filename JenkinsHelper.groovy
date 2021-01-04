@@ -151,10 +151,10 @@ def hasComponentFailures(){
 def retrieveCompletedDate() {
     String completedDateTime = SFDXResponse.result.completedDate
     
-    String completedDate = completedDateTime.dropRight( 14 )
-    completedDate = completedDate.drop( 5 ) + '-' + completedDate.dropRight( 6 ) 
+    String completedDate = completedDateTime.substring(0, 10 )
+    completedDate = completedDate.substring( 5,10 ) + '-' + completedDate.substring( 0,4 ) 
 
-    String completedTime = completedDateTime.drop( 11 ).dropRight( 5 )
+    String completedTime = completedDateTime.substring( 11, 16 )
    
     return completedDate + " " + completedTime
 }

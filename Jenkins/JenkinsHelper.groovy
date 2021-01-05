@@ -136,7 +136,7 @@ def retrieveComponentFailures(){
 def getComponentFailures(){
     def failureComponentsToReturn = """"""
     def count = 0
-    .details.componentFailures.each {
+     SFDXResponse.result.details.details.componentFailures.each {
             componentFailure ->
             count ++
             failureComponentsToReturn += "\n"+ count + ". "

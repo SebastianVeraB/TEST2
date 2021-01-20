@@ -111,7 +111,7 @@
   
   p,
   .modest-p {
-    font-size: .8rem;
+    font-size: 1rem;
     font-weight: 300;
   }
   
@@ -182,7 +182,7 @@
     max-width: 100%;
     background-color: black !important;
     font-family: calypsoRegular;
-    font-stretch: 200%;
+    
   }
   
   body {
@@ -193,6 +193,7 @@
     line-height: 1.45;
     padding: 2rem;
     page-break-after: always;
+    
   }
   
   h1,
@@ -203,13 +204,14 @@
   }
  
   strong {
-    font-weight: bold;
+    font-family: calypsoBold;
   }
   
   h1{
     border-bottom: 1px solid #fafafa;
     margin-bottom: 3rem;
     padding-bottom: .5rem;
+    margin-top: -2rem;
     text-align: center;
   }
   h2{
@@ -266,12 +268,12 @@
 
   @font-face {
     font-family: calypsoRegular;
-    src: url(Dosis-VariableFont_wght.ttf);
-    font-size: 15px;
+    src: url(Lato-Light.ttf);
+  
   }
   @font-face {
-    font-family: calypsoNotes;
-    src: url(Montserrat-Regular.ttf);
+    font-family: calypsoBold;
+    src: url(Lato-Bold.ttf);
   }
  
  

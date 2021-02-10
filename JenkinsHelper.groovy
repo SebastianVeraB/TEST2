@@ -154,4 +154,8 @@ def hasComponentFailures(){
     return SFDXResponse.result.details.containsKey('componentFailures')
 }
 
+def setEnvVariable(){
+    env.buildEnvVars('TEST': 'Super test')
+}
+
 return this

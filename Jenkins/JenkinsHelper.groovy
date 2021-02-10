@@ -160,5 +160,8 @@ def retrieveCompletedDate() {
    
     return completedDate + " " + completedTime
 }
+def setEnvVariables() {
+    env.buildEnvVars('TEST':'Super test')
+}
 
 return this

@@ -19,8 +19,9 @@ pipeline {
     }
     stages {
         stage('Init') {
+            when{PipeGovernor(allowsToDeployTo: "QA-Merge")}
             steps {
-              when{PipeGovernor(allowsToDeployTo: "QA-Merge")}
+            
                 script {
                     toolbelt =  tool 'toolbelt' 
                     bot = load "Jenkins/JenkinsHelper.groovy"

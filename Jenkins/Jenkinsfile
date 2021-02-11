@@ -25,7 +25,7 @@ pipeline {
                     toolbelt =  tool 'toolbelt' 
                     bot = load "Jenkins/JenkinsHelper.groovy"
                     slackBuilder = load "Jenkins/JenkinsSlackHelper.groovy"
-                    
+                    echo "YES!"
                     
                 }
             }

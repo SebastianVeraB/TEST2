@@ -1,4 +1,4 @@
-@Library('github-api-global-lib ') _
+@Library('BranchingPOC') _
 pipeline {
   triggers {
     GenericTrigger(

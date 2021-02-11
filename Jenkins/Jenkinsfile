@@ -20,7 +20,7 @@ pipeline {
     stages {
         stage('Init') {
           when { expression { 
-              PipeGovernor.allowsToDeployTo("QA-Merge")
+              PipeGovernor.allowsToDeployTo "QA-Merge"
              }
           }
             steps {

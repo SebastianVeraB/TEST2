@@ -19,7 +19,10 @@ pipeline {
     }
     stages {
         stage('Init') {
-            when{PipeGovernor(allowsToDeployTo: "QA-Merge")}
+          when { expression { 
+              PipeGovernor.allowsToDeployTo("QA-Merge")
+             }
+          }
             steps {
             
                 script {

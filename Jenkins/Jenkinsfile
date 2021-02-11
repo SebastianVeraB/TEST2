@@ -20,12 +20,12 @@ pipeline {
     stages {
         stage('Init') {
             steps {
-              when{PipeGovernor allowsToDeployTo: "QA-Merge"}
+              
                 script {
                     toolbelt =  tool 'toolbelt' 
                     bot = load "Jenkins/JenkinsHelper.groovy"
                     slackBuilder = load "Jenkins/JenkinsSlackHelper.groovy"
-                    echo "YES!"
+                    PipeGovernor allowsToDeployTo: "QA-Merge"
                     
                 }
             }

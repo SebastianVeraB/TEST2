@@ -1,5 +1,8 @@
 @Library('BranchingPOC') _
 pipeline {
+     options {
+    skipDefaultCheckout true
+  }
   triggers {
     GenericTrigger(
      genericVariables: [
@@ -19,18 +22,23 @@ pipeline {
     }
     stages {
         stage('Init') {
-          when { expression { 
-              PipeGovernor(allowsToDeployTo: "QA-Merge")
-             }
-          }
-            steps {
             
+            steps {
+                  catchError {
+            checkout scm
+                  }
                 script {
-                    toolbelt =  tool 'toolbelt' 
-                    bot = load "Jenkins/JenkinsHelper.groovy"
-                    slackBuilder = load "Jenkins/JenkinsSlackHelper.groovy"
-                    echo "YES!"
+                   
+                    log.info 'YESSS from info'
                     
+                }
+            }
+             post {
+                success {
+                    echo 'Compile stage successful'
+                }
+                failure {
+                    echo 'Compile stage failed setting variables'
                 }
             }
             
@@ -38,4 +46,9 @@ pipeline {
 
         
     }
+    post {
+    failure {
+     echo 'Failed!'
+    }
+  }
 }

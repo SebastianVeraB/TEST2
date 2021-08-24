@@ -10,7 +10,9 @@ pipeline {
       steps {
       
         unstash 'SOD-Tickets'
-        sh 'cat SOD-Tickets'
+        def data = sh (script: "cat SOD-Tickets", returnStdout: true) 
+        echo 'this is data'
+        println data
       }
     }
        

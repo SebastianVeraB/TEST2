@@ -13,7 +13,7 @@ pipeline {
          script{
          def data = sh (script: "cat SOD-Tickets", returnStdout: true) 
          echo 'this is SOD Hash'
-         def commitHash = sh (script: 'git log --pretty=%H --since=2.weeks --grep="${data}"', returnStdout: true)  
+         def commitHash = sh (script: 'git log --pretty=%H --since=2.weeks --grep=${data}', returnStdout: true)  
          println data
          println commitHash
          }

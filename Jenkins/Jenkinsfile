@@ -11,9 +11,11 @@ pipeline {
       
         unstash 'SOD-Tickets'
          script{
-            def data = sh (script: "cat SOD-Tickets", returnStdout: true) 
-        echo 'this is data'
-        println data
+         def data = sh (script: "cat SOD-Tickets", returnStdout: true) 
+         echo 'this is SOD Hash'
+         def commitHash = sh (script: 'git log --pretty=%H --since=2.weeks R1-Dev --grep="${data}"', returnStdout: true)  
+         println data
+         println commitHash
          }
         
       }

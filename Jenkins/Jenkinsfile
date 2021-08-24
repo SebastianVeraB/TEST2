@@ -17,6 +17,7 @@ pipeline {
          println data
          println commitHash
             sh 'git branch'
+            sh 'git checkout -t -b Release origin/Release'
             sh (script: "git cherry-pick ${commitHash}", returnStdout: true) 
             echo "start deploy job...."
             sh 'git push'

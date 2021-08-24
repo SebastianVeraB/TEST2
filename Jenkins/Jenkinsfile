@@ -1,54 +1,18 @@
 @Library('BranchingPOC') _
 pipeline {
-     options {
-    skipDefaultCheckout true
+   agent any
+   parameters {
+    stashedFile 'SOD-Tickets'
   }
-  triggers {
-    GenericTrigger(
-     genericVariables: [
-      [key: 'ref', value: '$.review.state']
-     ],
-
-     token: 'review',
-    
-    )
+   
+   stages {
+        stage('Example') {
+      steps {
+      
+        unstash 'SOD-Tickets'
+        sh 'cat SOD-Tickets'
+      }
+    }
+       
+   }
   }
-    agent any
-    environment {
-        CURRENT_USER = null
-        QA_USER = credentials('Jenkins_QA_User')
-        QA_CONSUMER_KEY = credentials('QA_CONSUMER_KEY')
-        
-    }
-    stages {
-        stage('Init') {
-            
-            steps {
-                  catchError {
-            checkout scm
-                  }
-                script {
-                   
-                    log.info 'YESSS from info'
-                    
-                }
-            }
-             post {
-                success {
-                    echo 'Compile stage successful'
-                }
-                failure {
-                    echo 'Compile stage failed setting variables'
-                }
-            }
-            
-        }
-
-        
-    }
-    post {
-    failure {
-     echo 'Failed!'
-    }
-  }
-}
